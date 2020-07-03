@@ -48,6 +48,15 @@ struct vec3
 		return x*rhs.x + y*rhs.y + z*rhs.z;
 	}
 
+	inline vec3 operator^(const vec3& rhs)
+	{
+		vec3 v;
+		v.x = y * rhs.z - z * rhs.y;
+		v.y = z * rhs.x - x * rhs.z;
+		v.z = x * rhs.y - y * rhs.x;
+		return v;
+	}
+
 	inline vec3& normalize() {
 		float inv_length = 1.f / sqrtf(x*x + y*y + z*z);
 		x *= inv_length;
