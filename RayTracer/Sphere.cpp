@@ -5,7 +5,7 @@ Sphere::Sphere()
 {
 }
 
-Sphere::Sphere(float r, Material* mat, vec3 col, const vec3& pos)
+Sphere::Sphere(const vec3& pos, float r, Material* mat, vec3 col)
 	:radius(r), Primitive::Primitive(pos, mat, col)
 {
 }

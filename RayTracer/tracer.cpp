@@ -89,12 +89,12 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		{
 			intersection.distance = distance;
 			intersection.primitive = primit;
+			col = static_cast<const Primitive*>(primit)->getColor();
 		}
 	}
 
 	if (intersection.primitive != nullptr)
 	{
-		vec3 BC = intersection.primitive->getColor();
 		//1 calcul du point d'intersection 
 		vec3 position = rayon.evaluate(intersection.distance);
 		//2 calcul d'une normale (d'une sphere ici)
@@ -112,35 +112,35 @@ vec3 tracer::trace(const ray& rayon, int depth)
 
 		//4 initialisation du nouveau rayon 
 		ray newRay;
+		vec3 reflect = brdf.reflect(rayon.direction, normal);
 
 		switch (intersection.primitive->getMaterial()->getType())
 		{
-			
 			case Material::Type::MATTE:
 				newRay.direction = normal;
 				newRay.origin = position + normal * EPSILON;
-				col = calculateLighting(normal, rayon, directionalLight, 0.f, BC) * shadow + (BC * 0.1);
+				col = col * calculateLighting(normal, rayon, directionalLight, 0.f, col) * shadow;
 				break;
 
 			case Material::Type::PLASTIC:
-				vec3 reflected = brdf.reflect(rayon.direction, normal);
-				newRay.direction = reflected;
+				newRay.direction = reflect;
 				newRay.origin = position + normal * EPSILON;
-				BC = trace(newRay, depth + 1);
-				col = calculateLighting(normal, newRay, directionalLight, intersection.primitive->getMaterial()->getRoughness(), BC) * shadow + (BC * 0.2);
-
+				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, directionalLight, intersection.primitive->getMaterial()->getRoughness(), col) * shadow;
 				break;
 
 			case Material::Type::DIELECTRIC:
-				vec3 refractionDirection = refract(brdf.reflect(rayon.direction, normal), normal, 1.3f).normalize();
+				vec3 refractionDirection = refract(reflect, normal, 1.3f).normalize();
 				newRay.direction = refractionDirection;
 				newRay.origin = position + refractionDirection * EPSILON;
 				col = trace(newRay, depth + 1);
 				break;
+
 			case Material::Type::METALLIC:
-				vec3 reflectionColor = trace(newRay, depth + 1);
-				col = reflectionColor;
+				newRay.direction = reflect;
+				newRay.origin = position + normal * EPSILON;
+				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, directionalLight, intersection.primitive->getMaterial()->getRoughness(), col) * shadow;
 				break;
+
 			default:
 				//appel recursif de trace()
 				col = col * trace(newRay, depth + 1);
