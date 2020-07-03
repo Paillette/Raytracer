@@ -1,15 +1,14 @@
 #pragma once
 #include "vec3.h"
+#include "Entity.h"
 
-class Light
+class Light : Entity
 {
-	vec3 position;
 	vec3 color;
 	float intensity;
 
 public:
-	Light(vec3 pos, vec3 col, float i) : position(pos), color(col), intensity(i) {}
+	Light(vec3 pos, vec3 col, float i): Entity(pos), color(col), intensity(i) {}
 
-	vec3 getPos() const { return position; }
 	vec3 getColor() const { return color; }
 };

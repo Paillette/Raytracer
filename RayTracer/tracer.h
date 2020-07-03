@@ -22,20 +22,18 @@ struct tracer {
 	Material* plastic = new Material(Material::Type::PLASTIC, 1.f, 500.f);
 	Material* glass = new Material(Material::Type::DIELECTRIC, 1.3f, 1.f);
 
-	DirectionLight* directionalLight = new DirectionLight { vec3{ 1.f, -1.f, 1.f }.normalize(), { 1.f, 1.f, 1.f}, 1.f };
+	DirectionLight* directionalLight = new DirectionLight { vec3{ 1.f, -1.f, 1.f }.normalize(), vec3{ 1.f, 1.f, 1.f}, 1.f };
 	//Light* pointLight = new Light{ { -1.0f, 0.0f, 0.f}, { 1.f, 1.f, 1.f }, 1.f };
 
 	tracer() {
-		scene.push_back(new Plane{ {0.f, -0.9f, 0.f}, plastic, {1.f, 0.f, 0.f} });
-		scene.push_back(new Sphere{ {0.f, 0.f, 3.f}, 1.f , mat, {0.0f, 0.5f, 1.0f } });
-		scene.push_back(new Sphere{ {1.f, 2.f, 5.f}, 0.8f, mat, { 0.0f, 0.0f, 1.0f } });
-		scene.push_back(new Sphere{ {-0.5f, -0.5f, 2.f}, 0.4f, mat, { 0.0f, 1.0f, 0.0f} });
+		scene.push_back(new Plane{ vec3{0.f, -0.9f, 0.f}, plastic, vec3{1.f, 0.f, 0.f} });
+		scene.push_back(new Sphere( 1.f , mat, vec3{0.0f, 0.5f, 1.0f }, {0.f, 0.f, 3.f} ));
+		scene.push_back(new Sphere( 0.8f, mat, vec3{ 0.0f, 0.0f, 1.0f }, {1.f, 2.f, 5.f} ));
+		scene.push_back(new Sphere( 0.4f, mat, vec3{ 0.0f, 1.0f, 0.0f}, {-0.5f, -0.5f, 2.f} ));
 	}
 
 	~tracer()
 	{
-		for (Primitive* primitive : scene)
-			delete primitive;
 	}
 
 	/*

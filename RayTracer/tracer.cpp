@@ -94,7 +94,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 
 	if (intersection.primitive != nullptr)
 	{
-		vec3 BC = intersection.primitive->color;
+		vec3 BC = intersection.primitive->getColor();
 		//1 calcul du point d'intersection 
 		vec3 position = rayon.evaluate(intersection.distance);
 		//2 calcul d'une normale (d'une sphere ici)
@@ -113,7 +113,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		//4 initialisation du nouveau rayon 
 		ray newRay;
 
-		switch (intersection.primitive->material->type)
+		switch (intersection.primitive->getMaterial()->getType())
 		{
 			
 			case Material::Type::MATTE:
@@ -127,7 +127,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 				newRay.direction = reflected;
 				newRay.origin = position + normal * EPSILON;
 				BC = trace(newRay, depth + 1);
-				col = calculateLighting(normal, newRay, directionalLight, intersection.primitive->material->roughness, BC) * shadow + (BC * 0.2);
+				col = calculateLighting(normal, newRay, directionalLight, intersection.primitive->getMaterial()->getRoughness(), BC) * shadow + (BC * 0.2);
 
 				break;
 
