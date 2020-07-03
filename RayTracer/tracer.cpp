@@ -119,7 +119,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 			case Material::Type::MATTE:
 				newRay.direction = normal;
 				newRay.origin = position + normal * EPSILON;
-				col = calculateLighting(normal, rayon, directionalLight, 0.f, col) * shadow + (col * 0.1);
+				col = col * calculateLighting(normal, rayon, directionalLight, 0.f, col) * shadow;
 				break;
 
 			case Material::Type::PLASTIC:
