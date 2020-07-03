@@ -37,8 +37,11 @@ struct vec3
 		return{ x / rhs, y / rhs, z / rhs };
 	}
 
-	inline vec3 operator +=(const vec3& rhs) {
-		return { x + rhs.x, y + rhs.y, z + rhs.z };
+	inline vec3& operator +=(const vec3& rhs) {
+		this->x = this->x + rhs.x;
+		this->y = this->y + rhs.y;
+		this->z = this->z + rhs.z;
+		return *this;
 	}
 
 	inline float dot(const vec3& rhs) const {
