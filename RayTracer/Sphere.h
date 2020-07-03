@@ -9,7 +9,7 @@ class Sphere : public Primitive
 public:
 	//constructeur
 	Sphere();
-	Sphere(float r, Material* mat, vec3 col, const vec3& pos);
+	Sphere(const vec3& pos, float r, Material* mat, vec3 col);
 
 	//return la distance d'intersection (t) si le discriminant est positif
 	//sinon on retourne une valeur negative (quelconque)

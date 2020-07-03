@@ -11,4 +11,5 @@ public:
 	Light(vec3 pos, vec3 col, float i): Entity(pos), color(col), intensity(i) {}
 
 	vec3 getColor() const { return color; }
+	float getIntensity() const { return intensity; }
 };
