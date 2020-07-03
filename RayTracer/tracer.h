@@ -5,6 +5,7 @@
 #include "Sphere.h"
 #include "ray.h"
 #include "Plane.h"
+#include "DirectionalLight.h"
 
 struct tracer {
 
@@ -16,10 +17,10 @@ struct tracer {
 	Background background;
 	std::vector<Primitive*> scene;
 
-	Material* mat = new Material(Material::Type::MATTE, vec3{ 0.0f, 0.0f, 1.0f }, 0.f, 0.f);
-	Material* metallic = new Material(Material::Type::METALLIC, vec3{ 1.0f, 0.0f, 0.0f });
-	Material* plastic = new Material(Material::Type::PLASTIC, vec3{ 1.0f, 0.0f, 0.0f }, 1.f, 500.f);
-	Material* glass = new Material(Material::Type::DIELECTRIC, vec3{ 1.0f, 1.0f, 1.0f }, 1.3f, 1.f);
+	Material* mat = new Material(Material::Type::MATTE, 0.f, 0.f);
+	Material* metallic = new Material(Material::Type::METALLIC);
+	Material* plastic = new Material(Material::Type::PLASTIC, 1.f, 500.f);
+	Material* glass = new Material(Material::Type::DIELECTRIC, 1.3f, 1.f);
 
 	DirectionLight* directionalLight = new DirectionLight { vec3{ 1.f, -1.f, 1.f }.normalize(), { 1.f, 1.f, 1.f}, 1.f };
 	//Light* pointLight = new Light{ { -1.0f, 0.0f, 0.f}, { 1.f, 1.f, 1.f }, 1.f };

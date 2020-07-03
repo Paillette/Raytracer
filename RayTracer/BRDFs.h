@@ -109,15 +109,15 @@ public:
 
 		//light calculations
 		//vec3 lightDirection = lerp(light.direction.x, light.direction.y - rayon.direction.y, light.direction.z).normalize();
-		vec3 lightReflectDirection = reflect(light->direction, normalDirection);
+		vec3 lightReflectDirection = reflect(light->getDirection(), normalDirection);
 		vec3 viewReflectDirection = reflect(viewDirection, normalDirection).normalize();
-		float NdotL = std::max(0.f, normalDirection.dot(light->direction * -1));
-		vec3 halfDirection = (viewDirection + light->direction * -1).normalize();
+		float NdotL = std::max(0.f, normalDirection.dot(light->getDirection() * -1));
+		vec3 halfDirection = (viewDirection + light->getDirection() * -1).normalize();
 		float NdotH = std::max(0.f, normalDirection.dot(halfDirection));
 		float NdotV = std::max(0.f, normalDirection.dot(viewDirection));
-		float LdotH = std::max(0.f, (light->direction * -1).dot(halfDirection));
+		float LdotH = std::max(0.f, (light->getDirection() * -1).dot(halfDirection));
 		float attenuation = 5.f;
-		vec3 attenColor = light->color * attenuation;
+		vec3 attenColor = light->getColor() * attenuation;
 
 		//diffuse color calculations
 		float roughness = calculateRoughness(_Glossiness);

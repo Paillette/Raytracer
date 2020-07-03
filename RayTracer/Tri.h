@@ -9,7 +9,7 @@ struct Tri : public Primitive
 	float radius;
 
 	//constructeur
-	Tri(const vec3& p, float r, Material* mat, vec3 color) : position(p), radius(r), Primitive(mat, color) {}
+	Tri(const vec3& p, float r, Material* mat, vec3 color) : radius(r), Primitive(p, mat, color) {}
 
 	float intersect(const ray& ray) const
 	{

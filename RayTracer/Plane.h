@@ -5,11 +5,9 @@
 struct Plane : public Primitive
 {
 public:
-	vec3 position;
-
 	//constructeur
 	Plane();
-	Plane(const vec3& p, Material* mat, vec3 color) : position(p), Primitive(mat, color) {}
+	Plane(const vec3& p, Material* mat, vec3 color) : Primitive(p, mat, color) {}
 
 
 	//return la distance d'intersection (t) si le discriminant est positif

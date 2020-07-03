@@ -9,7 +9,7 @@ struct Sphere : public Primitive
 
 	//constructeur
 	//Sphere() {}
-	Sphere(const vec3& p, float r, Material* mat, vec3 color) : position(p), radius(r), Primitive(mat, color) {}
+	Sphere(const vec3& p, float r, Material* mat, vec3 color) : radius(r), Primitive(p, mat, color) {}
 
 	//return la distance d'intersection (t) si le discriminant est positif
 	//sinon on retourne une valeur negative (quelconque)

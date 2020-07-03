@@ -19,7 +19,7 @@ vec3 tracer::calculateLighting(const vec3& normal, const ray& rayon, DirectionLi
 {
 	BRDFs brdf;
 	//Diffuse 
-	float diffuseFactor = brdf.clamp(std::max(0.f, normal.dot(light->direction * -1)), 0.f, 1.f);
+	float diffuseFactor = brdf.clamp(std::max(0.f, normal.dot(light->getDirection() * -1)), 0.f, 1.f);
 	vec3 R = brdf.reflect(rayon.direction, normal);
 	//Specular
 	float specularFactor = brdf.clamp(std::pow(std::max(0.f, R.dot(rayon.direction * -1)), _Glossiness), 0.f, 1.0f);
@@ -102,7 +102,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		//3 shadow feeler
 		ray feeler;
 		feeler.origin = position + normal * EPSILON;
-		feeler.direction = directionalLight->direction * -1;
+		feeler.direction = directionalLight->getDirection() * -1;
 		float shadow = 1.f;
 
 		if (inShadow(feeler))
