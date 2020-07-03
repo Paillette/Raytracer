@@ -56,6 +56,9 @@
     <ClInclude Include="Tri.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="RandomNumbers.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="rendu.tga">

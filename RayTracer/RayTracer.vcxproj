@@ -157,6 +157,7 @@
     <ClInclude Include="BRDFs.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Primitive.h" />
+    <ClInclude Include="RandomNumbers.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="tracer.h" />
