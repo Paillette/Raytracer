@@ -2,6 +2,7 @@
 #include "vec3.h"
 #include "Entity.h"
 #include "ray.h"
+#include "BRDFs.h"
 
 class Light : public Entity
 {
@@ -16,7 +17,7 @@ public:
 
 	vec3 getColor() const { return color; }
 	float getIntensity() const { return intensity; }
-	virtual vec3 CalculateLighting(const vec3& normal, const ray& ray, float _Glossiness, vec3 Color, const vec3& pos = vec3()) const = 0;
+	vec3 CalculateLighting(const vec3& normal, const ray& ray, float _Glossiness, vec3 Color, const vec3& pos = vec3());
 	
 	virtual vec3 getDirection(const vec3& pos = vec3()) const = 0;
 };

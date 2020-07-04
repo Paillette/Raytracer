@@ -45,12 +45,13 @@ vec3 tracer::refract(const vec3& hitPos, const vec3& normal, const float& ior)
 
 vec3 tracer::calculateLighting(const vec3& normal, const ray& ray, std::vector<Light*> light, float _Glossiness, vec3 col, const vec3& pos)
 {
-	for (size_t i = 0; i < lights.size(); i++)
+	vec3 result = lights[0]->CalculateLighting(normal, ray, _Glossiness, col, pos);
+	for (size_t i = 1; i < lights.size(); i++)
 	{
-		col += lights[i]->CalculateLighting(normal, ray, _Glossiness, col, pos);
+		result += lights[i]->CalculateLighting(normal, ray, _Glossiness, col, pos);
 	}
 
-	return col;
+	return result;
 }
 
 
@@ -99,18 +100,22 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		//3 shadow feeler
 		
 		float shadow = 1.f;
-		
+		bool isInShadow = true;
 		for (int i = 0; i < lights.size(); i++)
 		{
 			ray feeler;
 			feeler.origin = position + normal * EPSILON;
-			feeler.direction = lights[i]->getDirection() * -1.f;
+			feeler.direction = lights[i]->getDirection(position) * -1.f;
 
-			if (inShadow(feeler))
+			if (!inShadow(feeler))
 			{
-				shadow = 0.f;
+				isInShadow = false;
+				break;
 			}
 		}
+
+		if(isInShadow)
+			shadow = 0.f;
 
 		//4 initialisation du nouveau rayon 
 		ray newRay;

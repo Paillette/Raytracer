@@ -1,7 +1,8 @@
 #pragma once
-#include "vec3.h"
 #include <cmath>
 #include <algorithm>
+#include "vec3.h"
+#include "Light.h"
 
 class BRDFs
 {
@@ -99,8 +100,8 @@ public:
 	}
 
 	//Shading
-	vec3 calculateLight(vec3 normal, const ray& rayon, Light* light, float _Glossiness, vec3 Color, vec3 SpecColor, float ior, float Metallic, vec3 position)
-	{/*
+	/*vec3 calculateLight(vec3 normal, const ray& rayon, Light* light, float _Glossiness, vec3 Color, vec3 SpecColor, float ior, float Metallic, vec3 position)
+	{
 		//normal direction calculations
 		vec3 normalDirection = normal.normalize();
 		vec3 viewDirection = (rayon.origin - position).normalize(); 
@@ -146,6 +147,6 @@ public:
 		vec3 lightingModel = diffuseColor + specularity +IndirectSpecularity;
 		lightingModel = lightingModel * NdotL;
 		vec3 finalDiffuse = lightingModel* attenColor;
-		return finalDiffuse;*/
-	}
+		return finalDiffuse;
+	}*/
 };

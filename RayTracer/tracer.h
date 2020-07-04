@@ -4,8 +4,9 @@
 #include "Background.h"
 #include "Sphere.h"
 #include "ray.h"
-#include "Plane.h"
 #include "DirectionalLight.h"
+#include "PointLight.h"
+#include "Plane.h"
 #include "Tri.h"
 
 struct tracer {
@@ -26,14 +27,14 @@ struct tracer {
 
 	tracer() {
 		//Objects
-		scene.push_back(new Plane{ vec3{0.f, -0.9f, 0.f}, plastic });
+		scene.push_back(new Plane( vec3{0.f, -0.9f, 0.f}, plastic ));
 		scene.push_back(new Sphere( vec3{ 0.0f, 0.f, 3.0f }, 1.f , mat));
 		scene.push_back(new Sphere( vec3{ 1.f, 1.5f, 4.f }, 1.f, metallic ));
 		scene.push_back(new Sphere( vec3{ -0.5f, -0.65f, 1.8f }, 0.3f, mat ));
 
 		//Lights
-		lights.push_back(new DirectionLight{ vec3{ 1.f, -1.f, 1.f }.normalize(), color{ 0.f, 0.f, 1.f}, 1.f });
-		lights.push_back(new DirectionLight{ vec3{ -1.f, -1.f, 1.f }.normalize(), color{ 1.f, 0.f, 0.f}, 1.f });
+		lights.push_back(new DirectionLight( vec3{ 1.f, -1.f, 1.f }.normalize(), color{ 0.f, 0.f, 1.f}, 1.f ));
+		lights.push_back(new PointLight(vec3{ 1.f, 1.f, 0.f }, 1.0f, color{ 1.f, 0.f, 0.f }, 0.3f));
 	}
 
 	~tracer()
@@ -45,7 +46,7 @@ struct tracer {
 	bool inShadow(const ray& ray);
 	inline float random_float();
 
-	///methode de Whitted
+	//methode de Whitted
 	vec3 trace(const ray& rayon, int depth = 0);
 
 };
