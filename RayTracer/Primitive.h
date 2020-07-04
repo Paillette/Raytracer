@@ -2,6 +2,7 @@
 #include "ray.h"
 #include "Entity.h"
 #include "Material.h"
+#include "vec2.h"
 
 class Primitive : public Entity
 {
@@ -15,6 +16,7 @@ public:
 
 	virtual float intersect(const ray& ray) const = 0;
 	virtual vec3 calculateNormal(const vec3& p) const = 0;
+	virtual vec2 calculateUVs(const vec3& p) const = 0;
 	virtual ~Primitive() {}
 
 	vec3 getColor() const { return color; }
