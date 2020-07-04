@@ -1,9 +1,13 @@
 #pragma once
 #include "vec3.h"
 #include "Entity.h"
+#include "ray.h"
 
-class Light : Entity
+class Light : public Entity
 {
+
+protected:
+	static constexpr float EPSILON = 0.0001f;
 	vec3 color;
 	float intensity;
 
@@ -12,4 +16,7 @@ public:
 
 	vec3 getColor() const { return color; }
 	float getIntensity() const { return intensity; }
+	virtual vec3 CalculateLighting(const vec3& normal, const ray& ray, float _Glossiness, vec3 Color, const vec3& pos = vec3()) const = 0;
+	
+	virtual vec3 getDirection(const vec3& pos = vec3()) const = 0;
 };

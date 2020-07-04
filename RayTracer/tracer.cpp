@@ -16,29 +16,6 @@ float tracer::random_float()
 	return rand_generator();
 }
 
-vec3 tracer::calculateLighting(const vec3& normal, const ray& rayon, DirectionLight* light, float _Glossiness, vec3 Color)
-{
-	BRDFs brdf;
-
-	//Ambiant 
-	color ambient = vec3{ 0.0f, 0.0f, 0.0f };
-
-	//Diffuse 
-	float diffuseFactor = brdf.clamp(std::max(0.f, normal.dot(light->getDirection() * -1)), 0.f, 1.f);
-	color diffuseColor = Color * light->getColor() * light->getIntensity() * diffuseFactor;
-
-	//Specular
-	vec3 R = brdf.reflect(rayon.direction, normal);
-	float specularFactor = brdf.clamp(std::pow(std::max(0.f, R.dot(rayon.direction * -1)), _Glossiness), 0.f, 1.0f);
-	color specularColor = vec3{ 1.f, 1.f, 1.f } *specularFactor * light->getColor() * light->getIntensity();
-
-	Color = ambient + diffuseColor;
-
-	if (_Glossiness > 0)
-		Color = ambient + Color * diffuseColor + Color * specularColor;
-	return Color;
-}
-
 bool tracer::inShadow(const ray& ray)
 {
 		for (const Primitive* primitive : scene)
@@ -64,6 +41,16 @@ vec3 tracer::refract(const vec3& hitPos, const vec3& normal, const float& ior)
 		return { 0, 0, 0 };
 	else
 		return (hitPos * eta) + n * (eta * cosi - sqrtf(k));		
+}
+
+vec3 tracer::calculateLighting(const vec3& normal, const ray& ray, std::vector<Light*> light, float _Glossiness, vec3 col, const vec3& pos)
+{
+	for (size_t i = 0; i < lights.size(); i++)
+	{
+		col += lights[i]->CalculateLighting(normal, ray, _Glossiness, col, pos);
+	}
+
+	return col;
 }
 
 
@@ -110,14 +97,19 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		//2 calcul d'une normale (d'une sphere ici)
 		vec3 normal = intersection.primitive->calculateNormal(position);
 		//3 shadow feeler
-		ray feeler;
-		feeler.origin = position + normal * EPSILON;
-		feeler.direction = directionalLight->getDirection() * -1;
+		
 		float shadow = 1.f;
-
-		if (inShadow(feeler))
+		
+		for (int i = 0; i < lights.size(); i++)
 		{
-			shadow = 0.f;
+			ray feeler;
+			feeler.origin = position + normal * EPSILON;
+			feeler.direction = lights[i]->getDirection() * -1.f;
+
+			if (inShadow(feeler))
+			{
+				shadow = 0.f;
+			}
 		}
 
 		//4 initialisation du nouveau rayon 
@@ -128,13 +120,13 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		switch (intersection.primitive->getMaterial()->getType())
 		{
 			case Material::Type::MATTE:
-				col = calculateLighting(normal, rayon, directionalLight, mat->getGlossiness(), col) * shadow;
+				col = calculateLighting(normal, rayon, lights, mat->getGlossiness(), col, position) * shadow;
 				break;
 
 			case Material::Type::PLASTIC:
 				newRay.direction = reflect;
 				newRay.origin = position + normal * EPSILON;
-				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, directionalLight, mat->getGlossiness(), col) * shadow;
+				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, lights, mat->getGlossiness(), col, position) * shadow;
 				break;
 
 			case Material::Type::DIELECTRIC:
@@ -147,7 +139,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 			case Material::Type::METALLIC:
 				newRay.direction = reflect;
 				newRay.origin = position + normal * EPSILON;
-				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, directionalLight, mat->getGlossiness(), col) * shadow;
+				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, lights, mat->getGlossiness(), col, position) * shadow;
 				break;
 
 			default:
