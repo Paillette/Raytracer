@@ -2,6 +2,8 @@
 /x64/Debug
 RayTracer/x64/Debug
 RayTracer/Debug
+.vs/RayTracer/
+.vs/RayTracer/v16/Browse.VC.db
 
 # Prerequisites
 *.d
