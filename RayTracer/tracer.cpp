@@ -5,6 +5,7 @@
 #include <functional>
 #include "Plane.h"
 #include "BRDFs.h"
+#include "RandomNumbers.h"
 
 float tracer::random_float()
 {
@@ -18,15 +19,22 @@ float tracer::random_float()
 vec3 tracer::calculateLighting(const vec3& normal, const ray& rayon, DirectionLight* light, float _Glossiness, vec3 Color)
 {
 	BRDFs brdf;
+	//Ambiant 
+	color ambient = vec3{ 0.05f, 0.05f, 0.05f };
+
 	//Diffuse 
 	float diffuseFactor = brdf.clamp(std::max(0.f, normal.dot(light->getDirection() * -1)), 0.f, 1.f);
-	vec3 R = brdf.reflect(rayon.direction, normal);
-	//Specular
-	float specularFactor = brdf.clamp(std::pow(std::max(0.f, R.dot(rayon.direction * -1)), _Glossiness), 0.f, 1.0f);
+	color diffuseColor = Color * light->getColor() * light->getIntensity() * diffuseFactor;
 
-	Color = Color * diffuseFactor;
-	if(_Glossiness > 0)
-		Color = Color + vec3({ 0.5, 0.5, 0.5 }) * specularFactor;
+	//Specular
+	vec3 R = brdf.reflect(rayon.direction, normal);
+	float specularFactor = brdf.clamp(std::pow(std::max(0.f, R.dot(rayon.direction * -1)), _Glossiness), 0.f, 1.0f);
+	color specularColor = vec3{ 1.f, 1.f, 1.f } *specularFactor * light->getColor() * light->getIntensity();
+
+	Color = ambient + diffuseColor;
+
+	if (_Glossiness > 0)
+		Color = ambient + Color * diffuseColor + Color * specularColor;
 	return Color;
 }
 
@@ -73,6 +81,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 
 	Intersection intersection{ std::numeric_limits<float>::max(), nullptr };
 	BRDFs brdf;
+	randomNumbers random;
 
 	//calcul de la couleur du background pour ce pixel
 	//on itere sur l'ensemble des primitives de la scene
@@ -117,9 +126,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		switch (intersection.primitive->getMaterial()->getType())
 		{
 			case Material::Type::MATTE:
-				newRay.direction = normal;
-				newRay.origin = position + normal * EPSILON;
-				col = col * calculateLighting(normal, rayon, directionalLight, 0.f, col) * shadow;
+				col = col * calculateLighting(normal, rayon, directionalLight, 100.f, col) * shadow;
 				break;
 
 			case Material::Type::PLASTIC:

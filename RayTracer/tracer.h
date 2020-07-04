@@ -18,12 +18,12 @@ struct tracer {
 	Background background;
 	std::vector<Primitive*> scene;
 
-	Material* mat = new Material(Material::Type::MATTE, color{ 0.f, 0.f, 1.f } , 0.f, 0.f);
+	Material* mat = new Material(Material::Type::MATTE, color{ 0.05f, 0.05f, 1.f } , 0.f, 100.f);
 	Material* metallic = new Material(Material::Type::METALLIC, color{ 0.5f, 0.5f, 0.5f },  1.0f, 50.0f);
-	Material* plastic = new Material(Material::Type::PLASTIC, color{ 1.f, 0.f, 0.f }, 1.f, 100.f);
-	Material* glass = new Material(Material::Type::DIELECTRIC, color{ 0.f, 1.f, 0.f }, 1.3f, 1.f);
+	Material* plastic = new Material(Material::Type::PLASTIC, color{ 0.5f, 0.5f, 0.5f }, 1.f, 100.f);
+	Material* glass = new Material(Material::Type::DIELECTRIC, color{ 0.f, 0.5f, 0.5f }, 1.3f, 1.f);
 
-	DirectionLight* directionalLight = new DirectionLight { vec3{ 1.f, -1.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 1.f };
+	DirectionLight* directionalLight = new DirectionLight { vec3{ 1.f, -1.f, 1.f }.normalize(), color{ 1.f, 0.f, 0.f}, 1.f };
 	//Light* pointLight = new Light{ { -1.0f, 0.0f, 0.f}, { 1.f, 1.f, 1.f }, 1.f };
 
 	tracer() {
