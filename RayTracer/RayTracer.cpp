@@ -10,8 +10,8 @@
 
 int main(int argc, const char* argv[])
 {
-	const int width = 1920;// 800;
-	const int height = 1080;// 600;
+	const int width = 800;// 800;
+	const int height = 800;// 600;
 
 	Bitmap bmp;
 	bmp.SetHeader(width, height);

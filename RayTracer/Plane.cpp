@@ -2,13 +2,12 @@
 
 Plane::Plane()
 :Primitive(vec3{ 0, 0, 0 },
-	new Material(Material::Type::MATTE, 0.f, 0.f),
-	vec3{ 1.0f, 1.0f, 1.0f })
+	new Material(Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
 {
 }
 
-Plane::Plane(const vec3& p, Material* mat, vec3 color)
-	: Primitive::Primitive(p, mat, color)
+Plane::Plane(const vec3& p, Material* mat)
+	: Primitive::Primitive(p, mat)
 {
 }
 

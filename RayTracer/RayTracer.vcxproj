@@ -170,6 +170,7 @@
     <ClInclude Include="RandomNumbers.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="tracer.h" />
     <ClInclude Include="Tri.h" />
     <ClInclude Include="vec2.h" />

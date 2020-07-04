@@ -8,17 +8,15 @@ class Primitive : public Entity
 {
 protected:
 	const Material* material;
-	vec3 color;
 
 public:
 	Primitive(){}
-	Primitive(vec3 pos, const Material* mat, vec3 col) : Entity(pos), material(mat), color(col){}
+	Primitive(vec3 pos, const Material* mat) : Entity(pos), material(mat){}
 
 	virtual float intersect(const ray& ray) const = 0;
 	virtual vec3 calculateNormal(const vec3& p) const = 0;
 	virtual vec2 calculateUVs(const vec3& p) const = 0;
 	virtual ~Primitive() {}
 
-	vec3 getColor() const { return color; }
 	const Material* getMaterial() const { return material; }
 };

@@ -15,10 +15,12 @@ private:
 	Type type;
 	float IOR;
 	float roughness;
+	vec3 color;
 
 public:
-	Material(Type t, float indice = 1.f, float rough = 10.f) : type(t), IOR(indice), roughness(rough) {}
+	Material(Type t, vec3 col, float indice = 1.f, float rough = 10.f) : type(t), color(col), IOR(indice), roughness(rough) {}
 
 	Type getType() const { return type; }
 	float getRoughness() const { return roughness; }
+	vec3 getColor() const { return color; }
 };

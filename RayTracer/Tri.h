@@ -9,7 +9,7 @@ private:
 
 public:
 	//constructeur
-	Tri(float r, const vec3& pos, Material* mat, vec3 color);
+	Tri(float r, const vec3& pos, Material* mat);
 
 	float intersect(const ray& ray) const;
 	virtual vec3 calculateNormal(const vec3& p) const final;

@@ -89,7 +89,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		{
 			intersection.distance = distance;
 			intersection.primitive = primit;
-			col = static_cast<const Primitive*>(primit)->getColor();
+			col = static_cast<const Primitive*>(primit)->getMaterial()->getColor();
 		}
 	}
 

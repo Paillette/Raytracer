@@ -18,19 +18,19 @@ struct tracer {
 	Background background;
 	std::vector<Primitive*> scene;
 
-	Material* mat = new Material(Material::Type::MATTE, 0.f, 0.f);
-	Material* metallic = new Material(Material::Type::METALLIC, 1.0f, 50.0f);
-	Material* plastic = new Material(Material::Type::PLASTIC, 1.f, 100.f);
-	Material* glass = new Material(Material::Type::DIELECTRIC, 1.3f, 1.f);
+	Material* mat = new Material(Material::Type::MATTE, color{ 0.f, 0.f, 1.f } , 0.f, 0.f);
+	Material* metallic = new Material(Material::Type::METALLIC, color{ 0.5f, 0.5f, 0.5f },  1.0f, 50.0f);
+	Material* plastic = new Material(Material::Type::PLASTIC, color{ 1.f, 0.f, 0.f }, 1.f, 100.f);
+	Material* glass = new Material(Material::Type::DIELECTRIC, color{ 0.f, 1.f, 0.f }, 1.3f, 1.f);
 
 	DirectionLight* directionalLight = new DirectionLight { vec3{ 1.f, -1.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 1.f };
 	//Light* pointLight = new Light{ { -1.0f, 0.0f, 0.f}, { 1.f, 1.f, 1.f }, 1.f };
 
 	tracer() {
-		scene.push_back(new Plane{ vec3{0.f, -0.9f, 0.f}, plastic, color{1.f, 1.f, 1.f} });
-		scene.push_back(new Sphere( vec3{ 0.f, 0.f, 3.f }, 1.f , mat, vec3{0.0f, 0.5f, 1.0f } ));
-		scene.push_back(new Sphere( vec3{ 1.f, 2.f, 5.f }, 0.8f, metallic, vec3{ 0.5f, 0.5f, 0.5f } ));
-		scene.push_back(new Sphere( vec3{ -0.5f, -0.5f, 2.f }, 0.4f, mat, vec3{ 0.0f, 1.0f, 0.0f} ));
+		scene.push_back(new Plane{ vec3{0.f, -0.9f, 0.f}, plastic });
+		scene.push_back(new Sphere( vec3{ 0.0f, 0.f, 3.0f }, 1.f , mat));
+		scene.push_back(new Sphere( vec3{ 1.f, 1.5f, 4.f }, 1.f, metallic ));
+		scene.push_back(new Sphere( vec3{ -0.5f, -0.65f, 1.8f }, 0.3f, mat ));
 	}
 
 	~tracer()

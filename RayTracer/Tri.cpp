@@ -1,8 +1,8 @@
 #include "Tri.h"
 #include "vec3.h"
 
-Tri::Tri(float r, const vec3& pos, Material* mat, vec3 color)
-	: radius(r), Primitive::Primitive(pos, mat, color)
+Tri::Tri(float r, const vec3& pos, Material* mat)
+	: radius(r), Primitive::Primitive(pos, mat)
 {
 }
 

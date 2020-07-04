@@ -2,12 +2,12 @@
 #define M_PI 3.14159265358979323846
 
 Sphere::Sphere()
-:radius(1.0f), Primitive(vec3{ 0, 0, 0 }, new Material(Material::Type::MATTE, 0.f, 0.f), vec3{ 1.0f, 1.0f, 1.0f })
+	:radius(1.0f), Primitive(vec3{ 0, 0, 0 }, new Material(Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
 {
 }
 
-Sphere::Sphere(const vec3& pos, float r, Material* mat, vec3 col)
-	:radius(r), Primitive::Primitive(pos, mat, col)
+Sphere::Sphere(const vec3& pos, float r, Material* mat)
+	:radius(r), Primitive::Primitive(pos, mat)
 {
 }
 
