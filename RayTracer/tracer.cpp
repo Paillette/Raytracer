@@ -19,8 +19,9 @@ float tracer::random_float()
 vec3 tracer::calculateLighting(const vec3& normal, const ray& rayon, DirectionLight* light, float _Glossiness, vec3 Color)
 {
 	BRDFs brdf;
+
 	//Ambiant 
-	color ambient = vec3{ 0.05f, 0.05f, 0.05f };
+	color ambient = vec3{ 0.0f, 0.0f, 0.0f };
 
 	//Diffuse 
 	float diffuseFactor = brdf.clamp(std::max(0.f, normal.dot(light->getDirection() * -1)), 0.f, 1.f);
@@ -122,17 +123,18 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		//4 initialisation du nouveau rayon 
 		ray newRay;
 		vec3 reflect = brdf.reflect(rayon.direction, normal);
+		const Material* mat = intersection.primitive->getMaterial();
 
 		switch (intersection.primitive->getMaterial()->getType())
 		{
 			case Material::Type::MATTE:
-				col = col * calculateLighting(normal, rayon, directionalLight, 100.f, col) * shadow;
+				col = calculateLighting(normal, rayon, directionalLight, mat->getGlossiness(), col) * shadow;
 				break;
 
 			case Material::Type::PLASTIC:
 				newRay.direction = reflect;
 				newRay.origin = position + normal * EPSILON;
-				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, directionalLight, intersection.primitive->getMaterial()->getRoughness(), col) * shadow;
+				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, directionalLight, mat->getGlossiness(), col) * shadow;
 				break;
 
 			case Material::Type::DIELECTRIC:
@@ -145,7 +147,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 			case Material::Type::METALLIC:
 				newRay.direction = reflect;
 				newRay.origin = position + normal * EPSILON;
-				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, directionalLight, intersection.primitive->getMaterial()->getRoughness(), col) * shadow;
+				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, directionalLight, mat->getGlossiness(), col) * shadow;
 				break;
 
 			default:

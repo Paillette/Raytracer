@@ -14,13 +14,13 @@ public:
 private:
 	Type type;
 	float IOR;
-	float roughness;
+	float glossiness;
 	vec3 color;
 
 public:
-	Material(Type t, vec3 col, float indice = 1.f, float rough = 10.f) : type(t), color(col), IOR(indice), roughness(rough) {}
+	Material(Type t, vec3 col, float indice = 1.f, float rough = 10.f) : type(t), color(col), IOR(indice), glossiness(rough) {}
 
 	Type getType() const { return type; }
-	float getRoughness() const { return roughness; }
+	float getGlossiness() const { return glossiness; }
 	vec3 getColor() const { return color; }
 };
