@@ -21,7 +21,7 @@ int main(int argc, const char* argv[])
 	int nbreOfRaysByPixel;
 
 	//SuperSampling
-	int numberOfSamples = 1;
+	int numberOfSamples = 4;
 
 	//Jittering
 	randomNumbers randomFloat;
