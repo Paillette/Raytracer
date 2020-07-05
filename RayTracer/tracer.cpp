@@ -20,7 +20,7 @@ bool tracer::inShadow(const ray& ray)
 {
 		for (const Primitive* primitive : scene)
 		{
-			if (primitive->intersect(ray) > 0.f)
+			if (primitive->intersect(ray) > 0.0f)
 				return true;
 		}
 
@@ -147,7 +147,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		vec3 normal = intersection.primitive->calculateNormal(position);
 		//3 shadow feeler
 		
-		float shadow = 0.8f;
+		float shadow = 1.f;
 		bool isInShadow = true;
 		for (int i = 0; i < lights.size(); i++)
 		{
@@ -155,7 +155,8 @@ vec3 tracer::trace(const ray& rayon, int depth)
 			feeler.origin = position + normal * EPSILON;
 			feeler.direction = lights[i]->getDirection(position) * -1.f;
 
-			if (!inShadow(feeler))
+			if (!inShadow(feeler) &&
+				position.distance(lights[i]->getPosition()) < lights[i]->getRange())
 			{
 				isInShadow = false;
 				break;

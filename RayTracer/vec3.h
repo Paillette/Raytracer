@@ -64,6 +64,12 @@ struct vec3
 		z *= inv_length;
 		return *this;
 	}
+
+	inline float distance(const vec3& rhs) const
+	{
+		vec3 v = rhs - *this;
+		return sqrt(std::pow(v.x, 2.0f) + std::pow(v.y, 2.0f) + std::pow(v.z, 2.0f));
+	}
 };
 
 // equivalent a typedef vec3 color;

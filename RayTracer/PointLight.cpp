@@ -1,14 +1,14 @@
 #include "PointLight.h"
 
 PointLight::PointLight(vec3 pos, vec3 col, float i)
-    :Light(pos, col, i)
+    :Light(pos, col, i, 5.f)
 {
 }
 
 vec3 PointLight::CalculateLighting(const vec3& normal, const ray& ray, float _Glossiness, vec3 Color, const vec3& pos) const
 {
     vec3 v = pos - position;
-    float dist = sqrt(std::pow(v.x, 2.0f) + std::pow(v.y, 2.0f) + std::pow(v.z, 2.0f));
+    float dist = pos.distance(position);
     
     BRDFs brdf;
 
