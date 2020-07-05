@@ -23,4 +23,5 @@ public:
 	Type getType() const { return type; }
 	float getGlossiness() const { return glossiness; }
 	vec3 getColor() const { return color; }
+	float getIOR() const { return IOR; }
 };
