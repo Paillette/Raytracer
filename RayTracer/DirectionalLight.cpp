@@ -1,7 +1,7 @@
 #include "DirectionalLight.h"
 
 DirectionLight::DirectionLight(vec3 dir, vec3 col, float i)
-    :direction(dir), Light(vec3{ 0, 0, 0 }, col, i)
+    :direction(dir), Light(vec3{ 0, 0, 0 }, col, i, 999.f)
 {
 }
 

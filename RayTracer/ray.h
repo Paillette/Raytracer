@@ -8,8 +8,8 @@ struct ray
 	vec3 direction;
 	float tmax;
 
-	ray() :origin(vec3()), direction(vec3()), tmin(0), tmax(100) {}
-	ray(vec3 o, vec3 dir):origin(o), direction(dir), tmin(0), tmax(100) {}
+	ray() :origin(vec3()), direction(vec3()), tmin(0), tmax(999) {}
+	ray(vec3 o, vec3 dir, float tmin = 0, float tmax = 999):origin(o), direction(dir), tmin(tmin), tmax(tmax) {}
 
 	//calcul la distance d'un point d'intersection 
 	//t : distance entre origin et point d'intersection

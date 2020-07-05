@@ -10,4 +10,6 @@ public:
 	Entity(vec3 p) : position(p) {}
 
 	~Entity() {}
+
+	vec3 getPosition() const { return position; }
 };
