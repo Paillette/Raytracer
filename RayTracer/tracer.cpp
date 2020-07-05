@@ -27,6 +27,75 @@ bool tracer::inShadow(const ray& ray)
 		return false;
 }
 
+float tracer::AmbientOcclusion(const vec3& pos, const vec3& n)
+{
+	randomNumbers random;
+
+	float aoIntensity = 0.25f;
+	int nbSamples = 5;
+	float occlusionDistance = 2.0f;
+
+	vec3 hitPos = pos + n * EPSILON;
+
+	double percent = 0.0;
+	for (int i = 0; i < nbSamples; i++)
+	{
+		vec3 hemisphereDir = random.randomDirectionInHemisphere(n);
+		ray hemisphereRay = ray(hitPos, hemisphereDir);
+
+		Intersection currentTry;
+		GetIntersection(currentTry, hemisphereRay, vec3());
+
+		percent += (currentTry.distance > occlusionDistance) ?
+			1.0 : (currentTry.distance / occlusionDistance);
+	}
+
+	return percent / nbSamples;
+}
+
+vec3 tracer::GlobalIllumination(const vec3& pos, const vec3& n)
+{
+	randomNumbers random;
+	int nbSamples = 10;
+
+	vec3 hitPos = pos + n * EPSILON;
+	color indirectLigthing = vec3();
+
+	for (int i = 0; i < nbSamples; i++)
+	{
+		vec3 hemisphereDir = random.randomDirectionInHemisphere(n);
+		ray hemisphereRay = ray(hitPos, hemisphereDir);
+
+		Intersection currentTry;
+		color col;
+
+		if (GetIntersection(currentTry, hemisphereRay, col))
+			indirectLigthing += col;
+	}
+
+	return indirectLigthing / nbSamples;
+}
+
+bool tracer::GetIntersection(Intersection& intersection, const ray& ray, vec3& col)
+{
+	for (const Primitive* primit : scene)
+	{
+		float distance = primit->intersect(ray);
+
+		if (distance > EPSILON && distance < intersection.distance)
+		{
+			intersection.distance = distance;
+			intersection.primitive = primit;
+			col = intersection.primitive->getMaterial()->getColor();
+		}
+	}
+
+	if (intersection.distance == std::numeric_limits<float>::max())
+		return false;
+
+	return true;
+}
+
 vec3 tracer::refract(const vec3& hitPos, const vec3& normal, const float& ior)
 {
 	BRDFs brdf;
@@ -54,7 +123,6 @@ vec3 tracer::calculateLighting(const vec3& normal, const ray& ray, std::vector<L
 	return result;
 }
 
-
 vec3 tracer::trace(const ray& rayon, int depth)
 {
 	color col = background.Get(rayon.direction);
@@ -62,34 +130,14 @@ vec3 tracer::trace(const ray& rayon, int depth)
 	{
 		return col;
 	}
-	struct Intersection
-	{
-		float distance;
-		const Primitive* primitive;
-	};
 
-	Intersection intersection{ std::numeric_limits<float>::max(), nullptr };
+	Intersection intersection;
 	BRDFs brdf;
 	randomNumbers random;
 
 	//calcul de la couleur du background pour ce pixel
 	//on itere sur l'ensemble des primitives de la scene
-	/*
-	for (std::vector<Sphere>::iterator iter = scene.begin();
-		iter != scene.end(); ++iter)
-	*/
-	for (const Primitive* primit : scene)
-	{
-		float distance = primit->intersect(rayon);
-
-
-		if (distance > EPSILON&& distance < intersection.distance)
-		{
-			intersection.distance = distance;
-			intersection.primitive = primit;
-			col = static_cast<const Primitive*>(primit)->getMaterial()->getColor();
-		}
-	}
+	GetIntersection(intersection, rayon, col);
 
 	if (intersection.primitive != nullptr)
 	{
@@ -99,7 +147,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		vec3 normal = intersection.primitive->calculateNormal(position);
 		//3 shadow feeler
 		
-		float shadow = 1.f;
+		float shadow = 0.8f;
 		bool isInShadow = true;
 		for (int i = 0; i < lights.size(); i++)
 		{
@@ -121,17 +169,23 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		ray newRay;
 		vec3 reflect = brdf.reflect(rayon.direction, normal);
 		const Material* mat = intersection.primitive->getMaterial();
+		vec3 direct = vec3();
+		vec3 global = vec3();
 
 		switch (intersection.primitive->getMaterial()->getType())
 		{
 			case Material::Type::MATTE:
-				col = calculateLighting(normal, rayon, lights, mat->getGlossiness(), col, position) * shadow;
+				direct = calculateLighting(normal, rayon, lights, mat->getGlossiness(), col, position) * shadow;
+				global = GlobalIllumination(position, normal);
+				col = (direct + global) * col / M_PI;
 				break;
 
 			case Material::Type::PLASTIC:
 				newRay.direction = reflect;
 				newRay.origin = position + normal * EPSILON;
-				col = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, lights, mat->getGlossiness(), col, position) * shadow;
+				direct = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, lights, mat->getGlossiness(), col, position) * shadow;
+				global = GlobalIllumination(position, normal);
+				col = (direct + global) * col / M_PI;
 				break;
 
 			case Material::Type::DIELECTRIC:
@@ -151,6 +205,9 @@ vec3 tracer::trace(const ray& rayon, int depth)
 				//appel recursif de trace()
 				col = col * trace(newRay, depth + 1);
 		}
+
+		col = col * AmbientOcclusion(position, normal);
 	}
+
 	return col;
 }

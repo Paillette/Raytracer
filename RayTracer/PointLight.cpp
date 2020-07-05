@@ -1,6 +1,6 @@
 #include "PointLight.h"
 
-PointLight::PointLight(vec3 pos, float r, vec3 col, float i)
+PointLight::PointLight(vec3 pos, vec3 col, float i)
     :Light(pos, col, i)
 {
 }

@@ -37,4 +37,14 @@ public:
 			return p;
 		}
 	}
+
+	vec3 randomDirectionInHemisphere(const vec3& normal)
+	{
+		vec3 randDir = vec3{
+			(2.0f * RandomFloat(0, 1)) - 1.0f,
+			(2.0f * RandomFloat(0, 1)) - 1.0f,
+			(2.0f * RandomFloat(0, 1)) - 1.0f };
+		randDir = randDir.normalize();
+		return (randDir.dot(normal) >= 0.0) ? randDir : (randDir * -1.f);
+	}
 };
