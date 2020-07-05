@@ -34,7 +34,7 @@ struct tracer {
 
 		//Lights
 		lights.push_back(new DirectionLight( vec3{ 1.f, -1.f, 1.f }.normalize(), color{ 0.f, 0.f, 1.f}, 1.f ));
-		lights.push_back(new PointLight(vec3{ 1.f, 1.f, 0.f }, 1.0f, color{ 1.f, 0.f, 0.f }, 0.3f));
+		lights.push_back(new PointLight(vec3{ 0.f, 1.f, 1.5f }, 10.0f, color{ 1.f, 0.f, 0.f }, 0.5f));
 	}
 
 	~tracer()

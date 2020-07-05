@@ -148,8 +148,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bitmap.cpp" />
-    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="RayTracer.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="tracer.cpp" />

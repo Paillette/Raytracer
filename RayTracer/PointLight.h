@@ -3,10 +3,10 @@
 
 class PointLight : public Light
 {
-	float radius;
-
 public:
-	PointLight(vec3 pos, float r, vec3 col, float i) :radius(r), Light(pos, col, i) {}
+	PointLight(vec3 pos, float r, vec3 col, float i);
 
-	virtual vec3 getDirection(const vec3& pos = vec3()) const { return pos - position; }
+	virtual vec3 CalculateLighting(const vec3& normal, const ray& ray, float _Glossiness, vec3 Color, const vec3& pos) const;
+    
+	virtual vec3 getDirection(const vec3& pos = vec3()) const { return (pos - position).normalize(); }
 };
