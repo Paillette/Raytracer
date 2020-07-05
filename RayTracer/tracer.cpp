@@ -32,7 +32,7 @@ float tracer::AmbientOcclusion(const vec3& pos, const vec3& n)
 	randomNumbers random;
 
 	float aoIntensity = 0.25f;
-	int nbSamples = 5;
+	int nbSamples = 10;
 	float occlusionDistance = 2.0f;
 
 	vec3 hitPos = pos + n * EPSILON;
@@ -96,20 +96,50 @@ bool tracer::GetIntersection(Intersection& intersection, const ray& ray, vec3& c
 	return true;
 }
 
-vec3 tracer::refract(const vec3& hitPos, const vec3& normal, const float& ior)
+void fresnel(const vec3& I, const vec3& N, const float& ior, float& kr)
 {
 	BRDFs brdf;
-	float cosi = brdf.clamp(-1, 1, hitPos.dot(normal));
+	float cosi = brdf.clamp(I.dot(N), -1.f, 1.0f);
+	float etai = 1, etat = ior;
+	if (cosi > 0) { std::swap(etai, etat); }
+	// Compute sini using Snell's law
+	float sint = etai / etat * sqrtf(std::max(0.f, 1 - cosi * cosi));
+	// Total internal reflection
+	if (sint >= 1) {
+		kr = 1;
+	}
+	else {
+		float cost = sqrtf(std::max(0.f, 1 - sint * sint));
+		cosi = fabsf(cosi);
+		float Rs = ((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai * cost));
+		float Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost));
+		kr = (Rs * Rs + Rp * Rp) / 4;
+	}
+	// As a consequence of the conservation of energy, transmittance is given by:
+	// kt = 1 - kr;
+}
+
+
+vec3 tracer::refract(const ray& hitPos, const vec3& normal, const float& ior)
+{
+	float cosi = hitPos.direction.dot(normal);
 	float etai = 1, etat = ior;
 	vec3 n = normal;
-	if (cosi < 0) { cosi = -cosi; }
-	else { std::swap(etai, etat); n = n - normal; }
+	if (cosi > 0)
+	{
+		etai = ior;
+		etat = 1.0f;
+		n = normal * -1;
+	}
+	else
+	{
+		etai = 1.0f;
+		etat = ior;
+		cosi = -cosi;
+	}
 	float eta = etai / etat;
 	float k = 1 - eta * eta * (1 - cosi * cosi);
-	if (k < 0)
-		return { 0, 0, 0 };
-	else
-		return (hitPos * eta) + n * (eta * cosi - sqrtf(k));		
+	return k < 0 ? vec3{ 1, 0, 0 } : (hitPos.direction * n) + n * (eta * cosi - sqrtf(k));
 }
 
 vec3 tracer::calculateLighting(const vec3& normal, const ray& ray, std::vector<Light*> light, float _Glossiness, vec3 col, const vec3& pos)
@@ -171,6 +201,9 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		const Material* mat = intersection.primitive->getMaterial();
 		vec3 direct = vec3();
 		vec3 global = vec3();
+		float kr;
+		ray reflectedRay;
+		ray refractedRay;
 
 		switch (intersection.primitive->getMaterial()->getType())
 		{
@@ -183,16 +216,27 @@ vec3 tracer::trace(const ray& rayon, int depth)
 			case Material::Type::PLASTIC:
 				newRay.direction = reflect;
 				newRay.origin = position + normal * EPSILON;
-				direct = col * trace(newRay, depth + 1) + calculateLighting(normal, newRay, lights, mat->getGlossiness(), col, position) * shadow;
-				global = GlobalIllumination(position, normal);
-				col = (direct + global) * col / M_PI;
+				fresnel(newRay.direction, normal, mat->getIOR(), kr);
+				col = col * trace(newRay, depth + 1) * kr + calculateLighting(normal, newRay, lights, mat->getGlossiness(), col, position) * shadow;
 				break;
 
 			case Material::Type::DIELECTRIC:
-				vec3 refractionDirection = refract(reflect, normal, 1.3f).normalize();
-				newRay.direction = refractionDirection;
-				newRay.origin = position + refractionDirection * EPSILON;
-				col = trace(newRay, depth + 1);
+				color refractedColor = vec3{ 0, 0, 0 };
+				//fresnel
+				fresnel(rayon.direction, normal, mat->getIOR(), kr);
+				reflectedRay.direction = reflect;
+				reflectedRay.origin = position + normal * EPSILON;
+				color reflectionColor = trace(reflectedRay, depth + 1);
+
+				if (kr < 1)
+				{
+					vec3 refractionDirection = refract(rayon, normal, mat->getIOR()).normalize();
+					refractedRay.direction = refractionDirection;
+					refractedRay.origin = position + normal * EPSILON;
+					refractedColor = trace(refractedRay, depth + 1);
+				}
+
+				col = refractedColor; //reflectionColor * kr + 
 				break;
 
 			case Material::Type::METALLIC:
