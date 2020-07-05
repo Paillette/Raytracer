@@ -68,7 +68,7 @@ void fresnel(const vec3& I, const vec3& N, const float& ior, float& kr)
 		cosi = fabsf(cosi);
 		float Rs = ((etat * cosi) - (etai * cost)) / ((etat * cosi) + (etai * cost));
 		float Rp = ((etai * cosi) - (etat * cost)) / ((etai * cosi) + (etat * cost));
-		kr = (Rs * Rs + Rp * Rp) / 2;
+		kr = (Rs * Rs + Rp * Rp) / 4;
 	}
 	// As a consequence of the conservation of energy, transmittance is given by:
 	// kt = 1 - kr;
@@ -189,7 +189,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 					refractedColor = trace(refractedRay, depth + 1);
 				}
 				std::cout << depth << std::endl;
-				col = col * reflectionColor * kr + refractedColor * (1 - kr);
+				col = refractedColor;
 				break;
 
 			case Material::Type::METALLIC:

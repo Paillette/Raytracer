@@ -21,7 +21,7 @@ struct tracer {
 	Material* mat = new Material(Material::Type::MATTE, color{ 0.5f, 0.5f, 0.5f } , 0.f, 0.f);
 	Material* metallic = new Material(Material::Type::METALLIC, color{ 0.5f, 0.5f, 0.5f },  1.0f, 50.0f);
 	Material* plastic = new Material(Material::Type::PLASTIC, color{ 0.5f, 0.5f, 0.5f }, 1.f, 100.f);
-	Material* glass = new Material(Material::Type::DIELECTRIC, color{ 1.f, 1.f, 1.f }, 1.3f, 100.f);
+	Material* glass = new Material(Material::Type::DIELECTRIC, color{ 0.1f, 0.1f, 0.1f }, 1.3f, 100.f);
 
 	DirectionLight* directionalLight = new DirectionLight { vec3{ 1.f, -1.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 1.f };
 	//Light* pointLight = new Light{ { -1.0f, 0.0f, 0.f}, { 1.f, 1.f, 1.f }, 1.f };
@@ -29,7 +29,7 @@ struct tracer {
 	tracer() {
 		scene.push_back(new Plane{ vec3{0.f, -0.9f, 0.f}, mat });
 		scene.push_back(new Sphere( vec3{ 0.0f, 0.5f, 3.0f }, 1.f , glass));
-		scene.push_back(new Sphere( vec3{ -2.f, 2.f, 5.f }, 1.f, mat ));
+		scene.push_back(new Sphere( vec3{ -1.f, 1.f, 5.f }, 1.f, mat ));
 		scene.push_back(new Sphere( vec3{ -0.5f, -0.65f, 1.8f }, 0.3f, mat ));
 	}
 
