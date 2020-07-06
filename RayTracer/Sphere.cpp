@@ -27,12 +27,12 @@ float Sphere::intersect(const ray& ray) const
 	return t;
 }
 
-vec3 Sphere::calculateNormal(const vec3& p) const
+vec3 Sphere::calculateNormal(vec3& p) const
 {
 	return (p - position).normalize();
 }
 
-vec3 Sphere::calculateUVs(const vec3& p) const
+vec3 Sphere::calculateUVs(vec3& p) const
 {
 	vec3 pHit = globalToLocal(p).normalize();
 

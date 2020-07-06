@@ -23,12 +23,12 @@ float Plane::intersect(const ray& ray) const
 	return t;
 }
 
-vec3 Plane::calculateNormal(const vec3& p) const
+vec3 Plane::calculateNormal(vec3& p) const
 {
 	return normal;
 }
 
-vec3 Plane::calculateUVs(const vec3& p) const
+vec3 Plane::calculateUVs(vec3& p) const
 {
 	float u = (p.x - floor(p.x));
 	float v = (p.y - floor(p.y));

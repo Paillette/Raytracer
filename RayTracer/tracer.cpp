@@ -121,7 +121,6 @@ void fresnel(const vec3& I, const vec3& N, const float& ior, float& kr)
 	// kt = 1 - kr;
 }
 
-
 vec3 tracer::refract(const ray& hitPos, const vec3& normal, const float& ior)
 {
 	float cosi = hitPos.direction.dot(normal);

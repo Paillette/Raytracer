@@ -1,0 +1,103 @@
+#include "Cube.h"
+#include <algorithm>
+
+Cube::Cube()
+    :size(1.0f), Primitive(vec3{ 0, 0, 0 }, new Material(Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
+{
+}
+
+Cube::Cube(const vec3& pos, float s, Material* mat)
+    : size(s), Primitive::Primitive(pos, mat)
+{
+}
+
+float Cube::intersect(const ray& ray) const
+{
+    vec3 min { -size, -size, -size };
+    vec3 max { size, size, size };
+
+    float tmin = (min.x - ray.origin.x) / ray.direction.x;
+    float tmax = (max.x - ray.origin.x) / ray.direction.x;
+
+    if (tmin > tmax)
+        std::swap(tmin, tmax);
+
+    float tymin = (min.y - ray.origin.y) / ray.direction.y;
+    float tymax = (max.y - ray.origin.y) / ray.direction.y;
+
+    if (tymin > tymax) 
+        std::swap(tymin, tymax);
+
+    if ((tmin > tymax) || (tymin > tmax))
+        return 0.0f;
+
+    if (tymin > tmin)
+        tmin = tymin;
+
+    if (tymax < tmax)
+        tmax = tymax;
+
+    float tzmin = (min.z - ray.origin.z) / ray.direction.z;
+    float tzmax = (max.z - ray.origin.z) / ray.direction.z;
+
+    if (tzmin > tzmax) 
+        std::swap(tzmin, tzmax);
+
+    if ((tmin > tzmax) || (tzmin > tmax))
+        return 0.0f;
+
+    if (tzmin > tmin)
+        tmin = tzmin;
+
+    if (tzmax < tmax)
+        tmax = tzmax;
+
+    return tmin;
+}
+
+vec3 Cube::calculateNormal(vec3& p) const
+{
+    vec3 hit = globalToLocal(p);
+    vec3 obs = globalToLocal(vec3{ 0, 0, 0 });
+    vec3 dir = hit - obs;
+
+    vec3 n;
+    if (dir.dot(hit) < 0)
+    {
+        if (hit.x > 0.9999)
+            n = vec3{ 1, 0, 0 };
+        else if (hit.y > 0.9999)
+            n = vec3{ 0, 1, 0 };
+        else if (hit.z > 0.9999)
+            n = vec3{ 0, 0, 1 };
+        else if (hit.x < -0.9999)
+            n = vec3{ -1, 0, 0 };
+        else if (hit.y < -0.9999)
+            n = vec3{ 0, -1, 0 };
+        else
+            n = vec3{ 0, 0, -1 };
+    }
+    else
+    {
+        if (hit.x > 0.9999)
+            n = vec3{ -1, 0, 0 };
+        else if (hit.y > 0.9999)
+            n = vec3{ 0, -1, 0 };
+        else if (hit.z > 0.9999)
+            n = vec3{ 0, 0, -1 };
+        else if (hit.x < -0.9999)
+            n = vec3{ 1, 0, 0 };
+        else if (hit.y < -0.9999)
+            n = vec3{ 0, 1, 0 };
+        else
+            n = vec3{ 0, 0, 1 };
+    }
+
+    n = localToGlobal(n).normalize();
+    return n;
+}
+
+vec3 Cube::calculateUVs(vec3& p) const
+{
+    return vec3();
+}

@@ -14,8 +14,8 @@ public:
 	Primitive(vec3 pos, const Material* mat) : Entity(pos), material(mat){}
 
 	virtual float intersect(const ray& ray) const = 0;
-	virtual vec3 calculateNormal(const vec3& p) const = 0;
-	virtual vec3 calculateUVs(const vec3& p) const = 0;
+	virtual vec3 calculateNormal(vec3& p) const = 0;
+	virtual vec3 calculateUVs(vec3& p) const = 0;
 	virtual ~Primitive() {}
 
 	const Material* getMaterial() const { return material; }
