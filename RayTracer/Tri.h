@@ -13,6 +13,6 @@ public:
 
 	float intersect(const ray& ray) const;
 	virtual vec3 calculateNormal(const vec3& p) const;
-	virtual vec2 calculateUVs(const vec3& p) const;
+	virtual vec3 calculateUVs(const vec3& p) const;
 	virtual ~Tri() {}
 };

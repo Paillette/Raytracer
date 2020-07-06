@@ -5,10 +5,12 @@
 
 class Plane : public Primitive
 {
+	vec3 normal;
+
 public:
 	//constructeur
 	Plane();
-	Plane(const vec3& p, Material* mat);
+	Plane(const vec3& p, vec3 normal, Material* mat);
 
 
 	//return la distance d'intersection (t) si le discriminant est positif

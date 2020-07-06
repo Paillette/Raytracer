@@ -1,19 +1,17 @@
 #include "Plane.h"
 
 Plane::Plane()
-:Primitive(vec3{ 0, 0, 0 },
-	new Material(Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
+:normal(vec3{ 0, 0, -1.f }), Primitive(vec3{ 0, 0, 0 }, new Material(Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
 {
 }
 
-Plane::Plane(const vec3& p, Material* mat)
-	: Primitive::Primitive(p, mat)
+Plane::Plane(const vec3& p, vec3 n, Material* mat)
+	:normal(n), Primitive::Primitive(p, mat)
 {
 }
 
 float Plane::intersect(const ray& ray) const
 {
-	vec3 normal = vec3{ 0.f, 1.f, 0.f };
 	float denom = normal.dot(ray.direction);
 	float t = 0.f;
 
@@ -27,7 +25,7 @@ float Plane::intersect(const ray& ray) const
 
 vec3 Plane::calculateNormal(const vec3& p) const
 {
-	return vec3{ 0.f, 1.f, 0.f };
+	return normal;
 }
 
 vec3 Plane::calculateUVs(const vec3& p) const
