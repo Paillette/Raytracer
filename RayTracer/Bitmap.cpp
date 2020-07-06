@@ -1,5 +1,6 @@
 #include "Bitmap.h"
 #include "Properties.h"
+#include <vector>
 
 Bitmap::Bitmap() {
 	//file.open("rendu.ppm");
@@ -36,4 +37,25 @@ void Bitmap::OutputColor(const int ir, const int ig, const int ib)
 	file.write((const char*)&ib, sizeof(uint8_t));
 	file.write((const char*)&ig, sizeof(uint8_t));
 	file.write((const char*)&ir, sizeof(uint8_t));
-}	
+}
+
+void Bitmap::save(const char* filename, FREE_IMAGE_FORMAT format, const int width, const int height, std::vector<std::vector<vec3>> pixels)
+{
+	FIBITMAP* bitmap = FreeImage_Allocate(width, height, 32);
+
+	//Set pixel array
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			RGBQUAD color;
+			color.rgbRed = pixels[i][j].x;
+			color.rgbGreen = pixels[i][j].y;
+			color.rgbBlue = pixels[i][j].z;
+
+			FreeImage_SetPixelColor(bitmap, i, j, &color);
+		}
+	}
+
+	FreeImage_Save(format, bitmap, filename);
+}

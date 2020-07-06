@@ -61,8 +61,8 @@ vec3 Tri::calculateNormal(const vec3& p) const
 	return v0v2^v0v1;
 }
 
-vec2 Tri::calculateUVs(const vec3& p) const
+vec3 Tri::calculateUVs(const vec3& p) const
 {
     //TODO: Faire les UVS
-    return vec2();
+    return vec3();
 }
