@@ -42,7 +42,7 @@ struct tracer {
 
 	tracer() {
 		//Objects
-		scene.push_back(new Plane( vec3{0.f, -1.5f, 0.f}, matGrey));
+		scene.push_back(new Plane( vec3{0.f, -1.5f, 0.f}, vec3{ 0.f, -1.f, 0.f }, matGrey));
 		scene.push_back(new Sphere( vec3{ 0.0f, -0.7f, 4.0f }, 1.f , matGrey));
 		scene.push_back(new Sphere( vec3{ 1.5f, 0.2f, 8.f }, 1.2f, matGrey));
 		scene.push_back(new Sphere(vec3{ -1.f, 1.4f, 9.f }, 1.f, matGrey));
