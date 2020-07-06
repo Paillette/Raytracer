@@ -10,9 +10,9 @@ float Tri::intersect(const ray& ray) const
 {
 	float t = 1;
 
-    vec3 v0 = vec3{ position.x, position.y + radius/4, position.z + 5};
-    vec3 v1 = vec3{ position.x - radius / 4, position.y - radius / 4,  position.z - 1 };
-    vec3 v2 = vec3{ position.x + radius/4, position.y - radius/4,  position.z + 6 };
+    vec3 v0 = vec3{ position.x, position.y + radius/4, position.z };
+    vec3 v1 = vec3{ position.x - radius / 4, position.y - radius / 4,  position.z };
+    vec3 v2 = vec3{ position.x + radius/4, position.y - radius/4,  position.z  };
 
 	vec3 v0v1 = v1 - v0;
 	vec3 v0v2 = v2 - v0;
@@ -51,12 +51,18 @@ float Tri::intersect(const ray& ray) const
 
 vec3 Tri::calculateNormal(const vec3& p) const
 {
-    vec3 v0 = vec3{ position.x, position.y + radius / 4,  position.z + 5 };
-    vec3 v1 = vec3{ position.x - radius / 4, position.y - radius / 4,  position.z - 1};
-    vec3 v2 = vec3{ position.x + radius / 4, position.y - radius / 4,  position.z + 6 };
+    vec3 v0 = vec3{ position.x, position.y + radius / 4,  position.z };
+    vec3 v1 = vec3{ position.x - radius / 4, position.y - radius / 4,  position.z };
+    vec3 v2 = vec3{ position.x + radius / 4, position.y - radius / 4,  position.z };
 
     vec3 v0v1 = v1 - v0;
     vec3 v0v2 = v2 - v0;
 
 	return v0v2^v0v1;
+}
+
+vec2 Tri::calculateUVs(const vec3& p) const
+{
+    //TODO: Faire les UVS
+    return vec2();
 }
