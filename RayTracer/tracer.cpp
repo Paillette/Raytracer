@@ -178,9 +178,11 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		vec3 position = rayon.evaluate(intersection.distance);
 		//2 calcul d'une normale (d'une sphere ici)
 		vec3 normal = intersection.primitive->calculateNormal(position);
-		//3 shadow feeler
-		vec2 uv = intersection.primitive->calculateUVs(position);
+		//calcul d'uv
+		vec3 uvS = intersection.primitive->calculateUVs(position);
+		col = intersection.primitive->getMaterial()->getColor(uvS);
 
+		//3 shadow feeler
 		float shadow = 1.f;
 		bool isInShadow = true;
 
