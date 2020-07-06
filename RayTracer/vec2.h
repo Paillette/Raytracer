@@ -68,6 +68,10 @@ public:
 		return *this;
 	}
 
+	bool operator!=(const vec2 o) {
+		return x != o.x || y!= o.y;
+	}
+
 	// Multiplication by scalars
 
 	vec2 operator*(const float s) {

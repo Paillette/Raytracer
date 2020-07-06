@@ -8,6 +8,7 @@
 #include "PointLight.h"
 #include "Plane.h"
 #include "Tri.h"
+#include "Texture.h"
 
 struct tracer {
 
@@ -28,8 +29,8 @@ struct tracer {
 	std::vector<Primitive*> scene;
 	std::vector<Light*> lights;
 
-	Material* matPink = new Material(Material::Type::MATTE, color{ 1.f, 0.3f, 0.5f } , 0.f, 0.f);
 	Material* matGrey = new Material(Material::Type::MATTE, color{ 0.8f, 0.8f, 0.8f }, 0.f, 0.f);
+	Material* matPink = new Material(Material::Type::MATTE, color{ 1.f, 0.3f, 0.5f } , 0.f, 0.f);
 	Material* matRed = new Material(Material::Type::MATTE, color{ 1.f, 0.13f, 0.2f }, 0.f, 0.f);
 	Material* matBlue = new Material(Material::Type::MATTE, color{ 0.13f, 0.18f, 0.8f }, 0.f, 0.f);
 	Material* matGreen= new Material(Material::Type::MATTE, color{ 0.8f, 1.f, 0.2f }, 0.f, 0.f);
@@ -41,17 +42,17 @@ struct tracer {
 
 	tracer() {
 		//Objects
-		scene.push_back(new Plane( vec3{0.f, -1.5f, 0.f}, metallic));
-		scene.push_back(new Sphere( vec3{ 0.0f, -0.7f, 4.0f }, 1.f , metallic));
-		scene.push_back(new Sphere( vec3{ 1.5f, 0.4f, 8.f }, 1.2f, matBlue));
-		scene.push_back(new Sphere(vec3{ -1.f, 1.4f, 9.f }, 1.f, matPink));
-		scene.push_back(new Sphere( vec3{ -1.f, -1.1f, 3.f }, 0.5f, matRed));
-		scene.push_back(new Sphere(vec3{ -1.6f, -0.5f, 2.5f }, 0.3f, metallic));
-		scene.push_back(new Sphere(vec3{ 1.8f, -1.1f, 4.f }, 0.5f, metallic));
+		scene.push_back(new Plane( vec3{0.f, -1.5f, 0.f}, matGrey));
+		scene.push_back(new Sphere( vec3{ 0.0f, -0.7f, 4.0f }, 1.f , matGrey));
+		scene.push_back(new Sphere( vec3{ 1.5f, 0.2f, 8.f }, 1.2f, matGrey));
+		scene.push_back(new Sphere(vec3{ -1.f, 1.4f, 9.f }, 1.f, matGrey));
+		scene.push_back(new Sphere( vec3{ -1.f, -1.1f, 3.f }, 0.5f, matGrey));
+		scene.push_back(new Sphere(vec3{ -1.6f, -0.5f, 2.5f }, 0.3f, matGrey));
+		scene.push_back(new Sphere(vec3{ 1.8f, -1.f, 4.f }, 0.5f, matGrey));
 
 		//Lights
 		lights.push_back(new DirectionLight( vec3{ 1.f, -1.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 2.f ));
-		lights.push_back(new PointLight(vec3{ 2.f, 0.f, 3.f }, color{ 0.f, 0.f, 1.f }, 10.0f));
+		//lights.push_back(new PointLight(vec3{ 2.f, 0.f, 1.f }, color{ 0.f, 0.f, 1.f }, 10.0f));
 	}
 
 	~tracer()

@@ -1,5 +1,6 @@
 #pragma once
 #include "vec3.h"
+#include "vec2.h"
 
 class Material {
 
@@ -22,6 +23,20 @@ public:
 
 	Type getType() const { return type; }
 	float getGlossiness() const { return glossiness; }
-	vec3 getColor() const { return color; }
+	vec3 getColor(vec2 uv = vec2()) const { 
+		if (uv != vec2())
+		{
+			if (int(uv.x) % 2 == 0)
+			{
+				return vec3{ 1.f, 0.f, 0.f };
+			}
+			else
+			{
+				return vec3{ 0.f, 0.f, 1.f };
+			}
+		}
+		else
+			return color; 
+	}
 	float getIOR() const { return IOR; }
 };

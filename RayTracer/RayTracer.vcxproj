@@ -151,6 +151,7 @@
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="Properties.cpp" />
     <ClCompile Include="RayTracer.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="tracer.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Primitive.h" />
+    <ClInclude Include="Properties.h" />
     <ClInclude Include="RandomNumbers.h" />
     <ClInclude Include="ray.h" />
     <ClInclude Include="Sphere.h" />
