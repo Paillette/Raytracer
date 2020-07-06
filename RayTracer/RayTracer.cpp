@@ -8,6 +8,7 @@
 #include "BRDFs.h"
 #include "RandomNumbers.h"
 #include "Properties.h"
+using namespace std;
 
 int main(int argc, const char* argv[])
 {
@@ -89,6 +90,7 @@ int main(int argc, const char* argv[])
 	BRDFs clp;
 	int nbreOfRaysByPixel;
 	int i, j = 0;
+	std::vector<std::vector<vec3>> pixels;
 
 	//Jittering
 	randomNumbers randomFloat;
@@ -126,25 +128,25 @@ int main(int argc, const char* argv[])
 			// Get the average
 			col = col / numberOfSamples;
 
-			// Get the average.
-			//image[width * j + i] /= 4.0;
-
 			col.r = clp.clamp(col.r, 0.f, 1.f);
 			col.g = clp.clamp(col.g, 0.f, 1.f);
 			col.b = clp.clamp(col.b, 0.f, 1.f);
 
 			//compression gamma des couleurs linéaires
 			//pour le stockage en 8bits RGB
-			int r = int(powf(col.r, 1.f / 2.2f) * 255.99f);
-			int g = int(powf(col.g, 1.f / 2.2f) * 255.99f);
-			int b = int(powf(col.b, 1.f / 2.2f) * 255.99f);
+			float r = int(powf(col.r, 1.f / 2.2f) * 255.99f);
+			float g = int(powf(col.g, 1.f / 2.2f) * 255.99f);
+			float b = int(powf(col.b, 1.f / 2.2f) * 255.99f);
 
 			//equivalent a typedef vec3 color
 			//usign color = vec3
 			bmp.OutputColor(r, g, b);
+			vec3 pixel = vec3{ r, g, b };
+			pixels[i].push_back(pixel);
 
 			percent++;
 		}
+		bmp.save((const char *)prop->getName().c_str(), FREE_IMAGE_FORMAT::FIF_JPEG, prop->getWidth(), prop->getHeight(), pixels);
 		cout << "\r" << (percent) / (width * height) * 100 << "%";
 	}
 
