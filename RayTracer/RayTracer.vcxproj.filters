@@ -60,7 +60,10 @@
     <ClCompile Include="Square.cpp">
       <Filter>Source Files\Primitives</Filter>
     </ClCompile>
-    <ClCompile Include="SceneReader.cpp">
+    <ClCompile Include="Matrix4.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,18 +128,13 @@
     <ClInclude Include="Square.h">
       <Filter>Header Files\Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="SceneReader.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Matrix4.h">
+      <Filter>Header Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="rendu.tga">
       <Filter>Resource Files</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Scene\scene1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
   </ItemGroup>
 </Project>

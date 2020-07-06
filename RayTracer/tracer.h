@@ -29,8 +29,8 @@ struct tracer {
 	std::vector<Primitive*> scene;
 	std::vector<Light*> lights;
 
-	Material* matGrey = new Material(Material::Type::MATTE, color{ 0.8f, 0.8f, 0.8f }, 0.f, 0.f);
-	Material* matPink = new Material(Material::Type::MATTE, color{ 1.f, 0.3f, 0.5f } , 0.f, 0.f);
+	Material* matGrey = new Material(Material::Type::MATTE, color{ 0.8f, 0.8f, 0.8f }, true, 0.f, 0.f);
+	Material* matPink = new Material(Material::Type::MATTE, color{ 1.f, 0.3f, 0.5f }, 0.f, 0.f);
 	Material* matRed = new Material(Material::Type::MATTE, color{ 1.f, 0.13f, 0.2f }, 0.f, 0.f);
 	Material* matBlue = new Material(Material::Type::MATTE, color{ 0.13f, 0.18f, 0.8f }, 0.f, 0.f);
 	Material* matGreen= new Material(Material::Type::MATTE, color{ 0.8f, 1.f, 0.2f }, 0.f, 0.f);
@@ -42,7 +42,7 @@ struct tracer {
 
 	tracer() {
 		//Objects
-		scene.push_back(new Plane( vec3{0.f, -1.5f, 0.f}, vec3{ 0.f, -1.f, 0.f }, matGrey));
+		scene.push_back(new Plane( vec3{0.f, -1.5f, 0.f}, vec3{ 0.f, 1.f, 0.f }, matGrey));
 		scene.push_back(new Sphere( vec3{ 0.0f, -0.7f, 4.0f }, 1.f , matGrey));
 		scene.push_back(new Sphere( vec3{ 1.5f, 0.2f, 8.f }, 1.2f, matGrey));
 		scene.push_back(new Sphere(vec3{ -1.f, 1.4f, 9.f }, 1.f, matGrey));
