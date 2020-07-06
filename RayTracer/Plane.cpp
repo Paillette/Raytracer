@@ -30,12 +30,13 @@ vec3 Plane::calculateNormal(const vec3& p) const
 	return vec3{ 0.f, 1.f, 0.f };
 }
 
-vec2 Plane::calculateUVs(const vec3& p) const
+vec3 Plane::calculateUVs(const vec3& p) const
 {
 	float u = (p.x - floor(p.x));
 	float v = (p.y - floor(p.y));
+	float S = 1.f;
 
-	return vec2(u, v);
+	return vec3{ u, v, S };
 }
 
 

@@ -32,12 +32,22 @@ vec3 Sphere::calculateNormal(const vec3& p) const
 	return (p - position).normalize();
 }
 
-vec2 Sphere::calculateUVs(const vec3& p) const
+vec3 Sphere::calculateUVs(const vec3& p) const
 {
-	float phi = atan2(p.z, p.x);
-	float theta = asin(p.y);
-	float u = 1 - (phi + M_PI) / (2 * M_PI);
-	float v = (theta + M_PI / 2) / M_PI;
+	vec3 pHit = p;
+	pHit = position - pHit;
+	pHit = pHit.normalize();
+	float phi = atan2(pHit.x, pHit.z);
+	float theta = acos(pHit.y);
 
-	return vec2(u, v);
+	float u = 1 - (phi + M_PI) / (2 * M_PI);
+	float v = (abs((theta - M_PI / 2) / M_PI)) / radius;
+
+	float S = 30.f;
+	if (radius >= 1)
+		S = radius * 10.f;
+	else
+		S = radius * 30.f;
+
+	return vec3{ u, v, S };
 }
