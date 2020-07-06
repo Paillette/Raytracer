@@ -8,6 +8,8 @@
 #include "BRDFs.h"
 #include "RandomNumbers.h"
 #include "Properties.h"
+#include "SceneReader.h"
+
 using namespace std;
 
 int main(int argc, const char* argv[])
@@ -81,6 +83,10 @@ int main(int argc, const char* argv[])
 	prop->setSampleAA(numberOfSamples);
 	prop->setGI(GI);
 	prop->setName(name);
+
+	//TODO : TEST
+	SceneReader sr;
+	sr.readFile("Scene\\scene1.txt");
 
 	//Image
 	Bitmap bmp;
