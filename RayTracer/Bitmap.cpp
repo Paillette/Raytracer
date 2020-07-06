@@ -1,8 +1,9 @@
 #include "Bitmap.h"
+#include "Properties.h"
 
 Bitmap::Bitmap() {
 	//file.open("rendu.ppm");
-	file.open("rendu.tga", std::ios::binary);
+	file.open(Properties::get()->getName() + ".tga", std::ios::binary);
 }
 
 Bitmap::~Bitmap() {

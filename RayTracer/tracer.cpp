@@ -6,6 +6,8 @@
 #include "Plane.h"
 #include "BRDFs.h"
 #include "RandomNumbers.h"
+#include "vec2.h"
+#include "Properties.h"
 
 float tracer::random_float()
 {
@@ -164,6 +166,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 	Intersection intersection;
 	BRDFs brdf;
 	randomNumbers random;
+	constant_texture texture;
 
 	//calcul de la couleur du background pour ce pixel
 	//on itere sur l'ensemble des primitives de la scene
@@ -176,9 +179,11 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		//2 calcul d'une normale (d'une sphere ici)
 		vec3 normal = intersection.primitive->calculateNormal(position);
 		//3 shadow feeler
-		
+		vec2 uv = intersection.primitive->calculateUVs(position);
+
 		float shadow = 1.f;
 		bool isInShadow = true;
+
 		for (int i = 0; i < lights.size(); i++)
 		{
 			ray feeler;
@@ -193,15 +198,19 @@ vec3 tracer::trace(const ray& rayon, int depth)
 			}
 		}
 
+		if (Properties::get()->getShadow() == false)
+			isInShadow = false;
+
 		if(isInShadow)
 			shadow = 0.f;
+
 
 		//4 initialisation du nouveau rayon 
 		ray newRay;
 		vec3 reflect = brdf.reflect(rayon.direction, normal);
 		const Material* mat = intersection.primitive->getMaterial();
 		vec3 direct = vec3();
-		vec3 global = vec3();
+		vec3 global = vec3{ 0, 0, 0 };
 		float kr;
 		ray reflectedRay;
 		ray refractedRay;
@@ -210,6 +219,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		{
 			case Material::Type::MATTE:
 				direct = calculateLighting(normal, rayon, lights, mat->getGlossiness(), col, position) * shadow;
+				if(Properties::get()->getGI() == true)
 				global = GlobalIllumination(position, normal);
 				col = (direct + global) * col / M_PI;
 				break;
@@ -251,7 +261,10 @@ vec3 tracer::trace(const ray& rayon, int depth)
 				col = col * trace(newRay, depth + 1);
 		}
 
-		col = col * AmbientOcclusion(position, normal);
+		if (Properties::get()->getAO() == false)
+			col = col;
+		else
+			col = col * AmbientOcclusion(position, normal);
 	}
 
 	return col;
