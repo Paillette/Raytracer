@@ -34,9 +34,8 @@ vec3 Sphere::calculateNormal(const vec3& p) const
 
 vec3 Sphere::calculateUVs(const vec3& p) const
 {
-	vec3 pHit = p;
-	pHit = position - pHit;
-	pHit = pHit.normalize();
+	vec3 pHit = globalToLocal(p).normalize();
+
 	float phi = atan2(pHit.x, pHit.z);
 	float theta = acos(pHit.y);
 
