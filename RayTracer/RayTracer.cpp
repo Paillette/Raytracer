@@ -98,6 +98,7 @@ int main(int argc, const char* argv[])
 	//Raytracing
 	for (j = 0; j < height; j++)
 	{			
+		pixels.resize(width);
 		//convertion des coordonnées des pixels height en World 
 		//float y = -2.f * (float(j - height / 2) + 0.5f) / height;
 
@@ -142,14 +143,16 @@ int main(int argc, const char* argv[])
 			//usign color = vec3
 			bmp.OutputColor(r, g, b);
 			vec3 pixel = vec3{ r, g, b };
-			pixels[i].push_back(pixel);
 
+			pixels[i].push_back(pixel);
 			percent++;
+		
 		}
-		bmp.save((const char *)prop->getName().c_str(), FREE_IMAGE_FORMAT::FIF_JPEG, prop->getWidth(), prop->getHeight(), pixels);
+
 		cout << "\r" << (percent) / (width * height) * 100 << "%";
 	}
 
+	bmp.save((prop->getName() + ".jpg").c_str(), FREE_IMAGE_FORMAT::FIF_BMP, prop->getWidth(), prop->getHeight(), pixels);
 	cout << "\n" << "Finish !" << "\n";
 	return 0;
 }
