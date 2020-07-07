@@ -9,6 +9,7 @@
 #include "Plane.h"
 #include "Tri.h"
 #include "Cube.h"
+#include "InfiniteCylinder.h"
 #include "Texture.h"
 
 struct tracer {
@@ -43,10 +44,9 @@ struct tracer {
 
 	tracer() {
 		//Objects
-		scene.push_back(new Cube( vec3{1.5f, 1.5f, 5.f}, 1.0f, matGrey));
-		scene.push_back(new Sphere(vec3{ 0.f, 0.0f, 5.f }, 1.0f, matGrey));
+		scene.push_back(new InfiniteCylinder( vec3{0.f, 0.f, 5.f}, 1.0f, matGrey));
 		//Lights
-		lights.push_back(new DirectionLight( vec3{ 1.f, -1.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 2.f ));
+		lights.push_back(new DirectionLight( vec3{ 0.f, 0.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 2.f ));
 		//lights.push_back(new PointLight(vec3{ 2.f, 0.f, 1.f }, color{ 0.f, 0.f, 1.f }, 10.0f));
 	}
 
