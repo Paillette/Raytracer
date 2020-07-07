@@ -8,6 +8,8 @@
 #include "PointLight.h"
 #include "Plane.h"
 #include "Tri.h"
+#include "Cube.h"
+#include "InfiniteCylinder.h"
 #include "Texture.h"
 
 struct tracer {
@@ -42,16 +44,9 @@ struct tracer {
 
 	tracer() {
 		//Objects
-		scene.push_back(new Plane( vec3{0.f, -1.5f, 0.f}, vec3{ 0.f, 1.f, 0.f }, matGrey));
-		scene.push_back(new Sphere( vec3{ 0.0f, -0.7f, 4.0f }, 1.f , matGrey));
-		scene.push_back(new Sphere( vec3{ 1.5f, 0.2f, 8.f }, 1.2f, matGrey));
-		scene.push_back(new Sphere(vec3{ -1.f, 1.4f, 9.f }, 1.f, matGrey));
-		scene.push_back(new Sphere( vec3{ -1.f, -1.1f, 3.f }, 0.5f, matGrey));
-		scene.push_back(new Sphere(vec3{ -1.6f, -0.5f, 2.5f }, 0.3f, matGrey));
-		scene.push_back(new Sphere(vec3{ 1.8f, -1.f, 4.f }, 0.5f, matGrey));
-
+		scene.push_back(new InfiniteCylinder( vec3{0.f, 0.f, 5.f}, 1.0f, matGrey));
 		//Lights
-		lights.push_back(new DirectionLight( vec3{ 1.f, -1.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 2.f ));
+		lights.push_back(new DirectionLight( vec3{ 0.f, 0.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 2.f ));
 		//lights.push_back(new PointLight(vec3{ 2.f, 0.f, 1.f }, color{ 0.f, 0.f, 1.f }, 10.0f));
 	}
 

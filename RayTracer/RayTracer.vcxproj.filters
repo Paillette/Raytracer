@@ -66,8 +66,11 @@
     <ClCompile Include="Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneReader.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Cube.cpp">
+      <Filter>Source Files\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="InfiniteCylinder.cpp">
+      <Filter>Source Files\Primitives</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -134,18 +137,16 @@
     <ClInclude Include="Matrix4.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="SceneReader.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Cube.h">
+      <Filter>Header Files\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="InfiniteCylinder.h">
+      <Filter>Header Files\Primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="rendu.tga">
       <Filter>Resource Files</Filter>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Scene\scene1.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
   </ItemGroup>
 </Project>

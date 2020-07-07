@@ -31,12 +31,12 @@ float Square::intersect(const ray& ray) const
 	return 0.f;
 }
 
-vec3 Square::calculateNormal(const vec3& p) const
+vec3 Square::calculateNormal(vec3& p) const
 {
     return normal;
 }
 
-vec3 Square::calculateUVs(const vec3& p) const
+vec3 Square::calculateUVs(vec3& p) const
 {
 	float u = (p.x - floor(p.x));
 	float v = (p.y - floor(p.y));

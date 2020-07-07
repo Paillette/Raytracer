@@ -49,7 +49,7 @@ float Tri::intersect(const ray& ray) const
 	return t;
 }
 
-vec3 Tri::calculateNormal(const vec3& p) const
+vec3 Tri::calculateNormal(vec3& p) const
 {
     vec3 v0 = vec3{ position.x, position.y + radius / 4,  position.z };
     vec3 v1 = vec3{ position.x - radius / 4, position.y - radius / 4,  position.z };
@@ -61,7 +61,7 @@ vec3 Tri::calculateNormal(const vec3& p) const
 	return v0v2^v0v1;
 }
 
-vec3 Tri::calculateUVs(const vec3& p) const
+vec3 Tri::calculateUVs(vec3& p) const
 {
     float u = (p.x - floor(p.x));
     float v = (p.y - floor(p.y));
