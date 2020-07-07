@@ -7,8 +7,6 @@
 
 struct Bitmap
 {
-	// http://tfc.duke.free.fr/coding/tga_specs.pdf
-	//
 #pragma pack(push, 1)
 	struct TGAHeader
 	{
@@ -35,5 +33,6 @@ struct Bitmap
 	~Bitmap();
 	void SetHeader(const int width, const int height);
 	void OutputColor(const int ir, const int ig, const int ib);
+	
 	void save(const char* filename, FREE_IMAGE_FORMAT format, const int width, const int height, std::vector<std::vector<vec3>> pixels);
 };

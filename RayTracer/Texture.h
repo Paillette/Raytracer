@@ -1,15 +1,24 @@
 #pragma once
+#include <FreeImage.h>
+#include <vector>
 #include "vec3.h"
 
-class constant_texture
-{
+using namespace std;
+
+class Texture {
+
+	bool successfullLoad = false;
+	FREE_IMAGE_FORMAT baseFormat; //Base image format
+	vector<vector<color>> m_pixels; //Array of RGB pixels
+	int m_width; //Width
+	int m_height; //Height
+
 public:
-	constant_texture() {}
-	constant_texture(vec3 c) : color(c) {}
+	Texture(const char* filename);
+	
+	int loadFromFile(const char* filename);
 
-	virtual vec3 value(float u, float v, const vec3& p) const {
-		return color;
-	}
-
-	vec3 color;
+	int getHeight() const { return m_height; }
+	int getWidth() const { return m_width; }
+	color getPixelColor(int x, int y) const { return m_pixels[x][y]; }
 };

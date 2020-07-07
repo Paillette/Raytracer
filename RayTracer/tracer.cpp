@@ -88,12 +88,15 @@ bool tracer::GetIntersection(Intersection& intersection, const ray& ray, vec3& c
 		{
 			intersection.distance = distance;
 			intersection.primitive = primit;
-			col = intersection.primitive->getMaterial()->getColor();
 		}
 	}
 
-	if (intersection.distance == std::numeric_limits<float>::max())
+	if (intersection.primitive == nullptr)
 		return false;
+	
+	vec3 position = ray.evaluate(intersection.distance);
+	vec3 uvS = intersection.primitive->calculateUVs(position);
+	col = intersection.primitive->getMaterial()->getColor(uvS);
 
 	return true;
 }
@@ -165,7 +168,6 @@ vec3 tracer::trace(const ray& rayon, int depth)
 	Intersection intersection;
 	BRDFs brdf;
 	randomNumbers random;
-	constant_texture texture;
 
 	//calcul de la couleur du background pour ce pixel
 	//on itere sur l'ensemble des primitives de la scene
@@ -177,9 +179,6 @@ vec3 tracer::trace(const ray& rayon, int depth)
 		vec3 position = rayon.evaluate(intersection.distance);
 		//2 calcul d'une normale (d'une sphere ici)
 		vec3 normal = intersection.primitive->calculateNormal(position);
-		//calcul d'uv
-		vec3 uvS = intersection.primitive->calculateUVs(position);
-		col = intersection.primitive->getMaterial()->getColor(uvS);
 
 		//3 shadow feeler
 		float shadow = 1.f;

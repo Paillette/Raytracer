@@ -3,6 +3,7 @@
 #include "vec2.h"
 #include <cmath>
 #include <cfenv>
+#include "Texture.h"
 
 class Material {
 
@@ -20,20 +21,15 @@ private:
 	float glossiness;
 	vec3 color;
 	bool stripe;
+	Texture* tex;
 
 public:
-	Material(Type t, vec3 col, bool StripeOrColor, float indice = 1.f, float rough = 10.f) : type(t), color(col), stripe(StripeOrColor), IOR(indice), glossiness(rough) {}
+	Material(Type t, vec3 col, bool StripeOrColor = false, float indice = 1.f, float rough = 10.f, Texture* te = nullptr)
+		: type(t), color(col), tex(te), stripe(StripeOrColor), IOR(indice), glossiness(rough) {}
 
 	Type getType() const { return type; }
 	float getGlossiness() const { return glossiness; }
-	vec3 getColor(vec3 uvS = vec3()) const { 
-		if (stripe)
-		{
-			float patternU = fmod(uvS.x * uvS.z, 1) < 0.5;
-			return color * patternU;
-		}
-		else
-			return color; 
-	}
+	vec3 getColor(vec3 uvS = vec3()) const;
+	vec3 getColorInTexture(vec3 uv) const;
 	float getIOR() const { return IOR; }
 };

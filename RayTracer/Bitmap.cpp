@@ -3,7 +3,6 @@
 #include <vector>
 
 Bitmap::Bitmap() {
-	//file.open("rendu.ppm");
 	file.open(Properties::get()->getName() + ".tga", std::ios::binary);
 }
 

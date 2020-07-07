@@ -34,13 +34,12 @@ vec3 Sphere::calculateNormal(vec3& p) const
 
 vec3 Sphere::calculateUVs(vec3& p) const
 {
-	vec3 pHit = globalToLocal(p).normalize();
+	vec3 pHit = globalToLocal(p);
 
-	float phi = atan2(pHit.x, pHit.z);
-	float theta = acos(pHit.y);
-
+	float phi = atan2(pHit.z, pHit.x);
+	float theta = asin(pHit.y);
 	float u = 1 - (phi + M_PI) / (2 * M_PI);
-	float v = (abs((theta - M_PI / 2) / M_PI)) / radius;
+	float v = (theta + M_PI / 2) / M_PI;
 
 	float S = 30.f;
 	if (radius >= 1)
