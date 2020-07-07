@@ -13,8 +13,8 @@ Cube::Cube(const vec3& pos, float s, Material* mat)
 
 float Cube::intersect(const ray& ray) const
 {
-    vec3 min { -size, -size, -size };
-    vec3 max { size, size, size };
+    vec3 min { position.x - size, position.y - size, position.z - size };
+    vec3 max { position.x + size, position.y + size, position.z + size };
 
     float tmin = (min.x - ray.origin.x) / ray.direction.x;
     float tmax = (max.x - ray.origin.x) / ray.direction.x;
@@ -51,6 +51,8 @@ float Cube::intersect(const ray& ray) const
 
     if (tzmax < tmax)
         tmax = tzmax;
+    
+    vec3 impact = ray.origin + ray.direction * tmin;
 
     return tmin;
 }
@@ -62,42 +64,45 @@ vec3 Cube::calculateNormal(vec3& p) const
     vec3 dir = hit - obs;
 
     vec3 n;
-    if (dir.dot(hit) < 0)
-    {
-        if (hit.x > 0.9999)
-            n = vec3{ 1, 0, 0 };
-        else if (hit.y > 0.9999)
-            n = vec3{ 0, 1, 0 };
-        else if (hit.z > 0.9999)
-            n = vec3{ 0, 0, 1 };
-        else if (hit.x < -0.9999)
-            n = vec3{ -1, 0, 0 };
-        else if (hit.y < -0.9999)
-            n = vec3{ 0, -1, 0 };
-        else
-            n = vec3{ 0, 0, -1 };
-    }
-    else
-    {
-        if (hit.x > 0.9999)
-            n = vec3{ -1, 0, 0 };
-        else if (hit.y > 0.9999)
-            n = vec3{ 0, -1, 0 };
-        else if (hit.z > 0.9999)
-            n = vec3{ 0, 0, -1 };
-        else if (hit.x < -0.9999)
-            n = vec3{ 1, 0, 0 };
-        else if (hit.y < -0.9999)
-            n = vec3{ 0, 1, 0 };
-        else
-            n = vec3{ 0, 0, 1 };
-    }
 
-    n = localToGlobal(n).normalize();
+    if (hit.x > 0.9999)
+        n = vec3{ 1, 0, 0 };
+    else if (hit.y > 0.9999)
+        n = vec3{ 0, 1, 0 };
+    else if (hit.z > 0.9999)
+        n = vec3{ 0, 0, 1 };
+    else if (hit.x < -0.9999)
+        n = vec3{ -1, 0, 0 };
+    else if (hit.y < -0.9999)
+        n = vec3{ 0, -1, 0 };
+    else
+        n = vec3{ 0, 0, -1 };
+
     return n;
 }
 
 vec3 Cube::calculateUVs(vec3& p) const
 {
-    return vec3();
+    vec3 res = globalToLocal(p);
+
+    if (res.x > 0.9999 || res.x < -0.9999)
+    {
+        res.x = (res.z + 1) / 2;
+        res.y = (res.y + 1) / 2;
+        res.z = 1.0f;
+    }
+    else if (res.y > 0.9999 || res.y < -0.9999)
+    {
+        res.x = (res.x + 1) / 2;
+        res.y = (res.z + 1) / 2;
+        res.z = 1.0f;
+    }
+    else if (res.z > 0.9999 || res.z < -0.9999)
+    {
+        res.x = (res.x + 1) / 2;
+        res.y = (res.y + 1) / 2;
+        res.z = 1.0f;
+    }
+
+    return res;
 }
