@@ -1,7 +1,8 @@
 #include "Cone.h"
+#define M_PI 3.14159265358979323846
 
 Cone::Cone()
-    :radius(1.0f), Primitive(vec3{ 0, 0, 0 }, new Material(Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
+    :radius(1.0f), height(2.0f), Primitive(vec3{ 0, 0, 0 }, new Material(Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
 {
 }
 
@@ -50,5 +51,19 @@ vec3 Cone::calculateNormal(vec3& p) const
 
 vec3 Cone::calculateUVs(vec3& p) const
 {
-    return vec3();
+    vec3 pHit = globalToLocal(p);
+
+    float theta = atan2(pHit.x, pHit.z);
+    float rawU = theta / (2 * M_PI);
+    float u = 1.0f - (rawU + 0.5f);
+
+    float v = fmod(pHit.y, 1);
+
+    float S = 30.f;
+    if (radius >= 1)
+        S = radius * 10.f;
+    else
+        S = radius * 30.f;
+
+    return vec3{ u, v, 10.f };
 }
