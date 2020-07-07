@@ -25,6 +25,8 @@ int main(int argc, const char* argv[])
 	bool shadow = prop->getShadow();
 	bool moreOption = false;
 	bool AO = prop->getAO();
+	int numberOfSamplesAO = Properties::get()->getSampleAO();
+	int numberOfSamplesGI = Properties::get()->getSampleGI();
 	bool GI = prop->getGI();
 	float percent = 0.f;
 	bool changeMat = true;
@@ -37,7 +39,7 @@ int main(int argc, const char* argv[])
 	{
 		cout << u8"-----------Welcome to raytracing !-------------" << "\n" << "\n";
 
-		cout << u8"Choose scene to render. Enter a number between 1 and 3" << "\n";
+		cout << u8"Choose scene to render. Enter a number between 1 and 4" << "\n";
 		cin >> scene;
 		cout << "\n";
 		sr.readFile("Scene\\scene" + std::to_string(scene) + ".txt");
@@ -84,8 +86,16 @@ int main(int argc, const char* argv[])
 			cin >> AO;
 			cout << "\n";
 
+			cout << u8"Number of AO samples " << "\n";
+			cin >> numberOfSamplesAO;
+			cout << "\n";
+
 			cout << u8"Render with GI ?" << "\n" << u8"Yes : 1" << u8"      No : 0     " << "\n";
 			cin >> GI;
+			cout << "\n";
+
+			cout << u8"Number of GI samples " << "\n";
+			cin >> numberOfSamplesGI;
 			cout << "\n";
 
 			cout << u8"Number of samples for AA" << "\n";
@@ -104,7 +114,9 @@ int main(int argc, const char* argv[])
 	prop->setHeight(height);
 	prop->setWidth(width);
 	prop->setAO(AO);
+	prop->setSampleAO(numberOfSamplesAO);
 	prop->setSampleAA(numberOfSamples);
+	prop->setSampleGI(numberOfSamplesGI);
 	prop->setGI(GI);
 	prop->setName(name);
 

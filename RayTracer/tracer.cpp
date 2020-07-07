@@ -34,7 +34,7 @@ float tracer::AmbientOcclusion(const vec3& pos, const vec3& n)
 	randomNumbers random;
 
 	float aoIntensity = 0.25f;
-	int nbSamples = 10;
+	int nbSamples = Properties::get()->getSampleAO();;
 	float occlusionDistance = 2.0f;
 
 	vec3 hitPos = pos + n * EPSILON;
@@ -58,7 +58,7 @@ float tracer::AmbientOcclusion(const vec3& pos, const vec3& n)
 vec3 tracer::GlobalIllumination(const vec3& pos, const vec3& n)
 {
 	randomNumbers random;
-	int nbSamples = 10;
+	int nbSamples = Properties::get()->getSampleGI();
 
 	vec3 hitPos = pos + n * EPSILON;
 	color indirectLigthing = vec3();

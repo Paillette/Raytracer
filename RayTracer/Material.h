@@ -4,6 +4,7 @@
 #include <cmath>
 #include <cfenv>
 #include "Texture.h"
+#include <string>
 
 class Material {
 
@@ -16,6 +17,7 @@ public:
 	};
 
 private:
+	string name;
 	Type type;
 	float IOR;
 	float glossiness;
@@ -24,12 +26,15 @@ private:
 	Texture* tex;
 
 public:
-	Material(Type t, vec3 col, bool StripeOrColor = false, float indice = 1.f, float rough = 10.f, Texture* te = nullptr)
-		: type(t), color(col), tex(te), stripe(StripeOrColor), IOR(indice), glossiness(rough) {}
+	Material(string n, Type t, vec3 col, bool StripeOrColor = false, float indice = 1.f, float rough = 10.f, Texture* te = nullptr)
+		: name(n), type(t), color(col), tex(te), stripe(StripeOrColor), IOR(indice), glossiness(rough) {}
 
+	string getName() const { return name; }
 	Type getType() const { return type; }
 	float getGlossiness() const { return glossiness; }
 	vec3 getColor(vec3 uvS = vec3()) const;
 	vec3 getColorInTexture(vec3 uv) const;
 	float getIOR() const { return IOR; }
+
+	void setStripeOrColor(bool i) { stripe = i; }
 };
