@@ -8,14 +8,17 @@
 #include "BRDFs.h"
 #include "RandomNumbers.h"
 #include "Properties.h"
+#include "SceneReader.h"
+
 using namespace std;
 
 int main(int argc, const char* argv[])
 {
 	//Instance du singleton des propriétés
-	Properties *prop;
+	Properties* prop;
 	prop = Properties::get();
 
+	int scene = 1;
 	string name = prop->getName();
 	int height = prop->getHeight();
 	int width = prop->getWidth();
@@ -24,6 +27,8 @@ int main(int argc, const char* argv[])
 	bool AO = prop->getAO();
 	bool GI = prop->getGI();
 	float percent = 0.f;
+	bool changeMat = true;
+	SceneReader sr;
 	//SuperSampling
 	int numberOfSamples = Properties::get()->getSampleAA();
 
@@ -31,6 +36,11 @@ int main(int argc, const char* argv[])
 	while (prop->getReady() == false)
 	{
 		cout << u8"-----------Welcome to raytracing !-------------" << "\n" << "\n";
+
+		cout << u8"Choose scene to render. Enter a number between 1 and 3" << "\n";
+		cin >> scene;
+		cout << "\n";
+		sr.readFile("Scene\\scene" + std::to_string(scene) + ".txt");
 
 		cout << u8"Choose image name" << "\n";
 		cin >> name;
@@ -48,10 +58,26 @@ int main(int argc, const char* argv[])
 		cin >> shadow;
 		cout << "\n";
 
+		cout << u8"Change material ?" << "\n" << u8"Yes : 1" << u8"      No : 0     " << "\n";
+		cin >> changeMat;
+		cout << "\n";
+
+		if (changeMat == true)
+		{
+			for (int i = 0; i < sr.getMaterial().size(); i++)
+			{
+				bool answer = 0;
+				cout << " --->" << sr.getMaterial()[i]->getName() << "\n" << u8"Yes : 1" << u8"      No : 0     " << "\n";
+				cin >> answer;
+				cout << "\n";
+				sr.getMaterial()[i]->setStripeOrColor(answer);
+			}
+		}
+
 		cout << u8"Want more options ?" << "\n" << u8"Yes : 1" << u8"       No : 0     " << "\n";
 		cin >> moreOption;
 		cout << "\n";
-		
+
 		if (moreOption == true)
 		{
 			cout << u8"Render with AO ?" << "\n" << u8"Yes : 1" << u8"      No : 0     " << "\n";
@@ -82,11 +108,12 @@ int main(int argc, const char* argv[])
 	prop->setGI(GI);
 	prop->setName(name);
 
+
 	//Image
 	Bitmap bmp;
 	bmp.SetHeader(width, height);
 	float aspectRatio = float(width) / float(height);
-	tracer tracer;
+	tracer tracer(sr.getPrimitivesList(), sr.getLightList());
 	BRDFs clp;
 	int nbreOfRaysByPixel;
 	int i, j = 0;

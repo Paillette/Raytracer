@@ -31,23 +31,24 @@ struct tracer {
 	std::vector<Primitive*> scene;
 	std::vector<Light*> lights;
 
-	Material* matGrey = new Material(Material::Type::MATTE, color{ 0.8f, 0.8f, 0.8f }, true, 0.f, 0.f);
-	Material* matPink = new Material(Material::Type::MATTE, color{ 1.f, 0.3f, 0.5f }, 0.f, 0.f);
-	Material* matRed = new Material(Material::Type::MATTE, color{ 1.f, 0.13f, 0.2f }, 0.f, 0.f);
-	Material* matBlue = new Material(Material::Type::MATTE, color{ 0.13f, 0.18f, 0.8f }, 0.f, 0.f);
-	Material* matGreen= new Material(Material::Type::MATTE, color{ 0.8f, 1.f, 0.2f }, 0.f, 0.f);
-	Material* matOrange = new Material(Material::Type::MATTE, color{ 0.9f, 0.3f, 0.0f }, 0.f, 0.f);
+	Material* matGrey = new Material("matBlue", Material::Type::MATTE, color{ 0.8f, 0.8f, 0.8f }, true, 0.f, 0.f);
+	Material* matPink = new Material("matPink", Material::Type::MATTE, color{ 1.f, 0.3f, 0.5f }, 0.f, 0.f);
+	Material* matRed = new Material("matRed", Material::Type::MATTE, color{ 1.f, 0.13f, 0.2f }, 0.f, 0.f);
+	Material* matBlue = new Material("matBlue", Material::Type::MATTE, color{ 0.13f, 0.18f, 0.8f }, 0.f, 0.f);
+	Material* matGreen= new Material("matGreen", Material::Type::MATTE, color{ 0.8f, 1.f, 0.2f }, 0.f, 0.f);
+	Material* matOrange = new Material("matOrange", Material::Type::MATTE, color{ 0.9f, 0.3f, 0.0f }, 0.f, 0.f);
 
-	Material* metallic = new Material(Material::Type::METALLIC, color{ 0.5f, 0.5f, 0.5f },  1.0f, 100.0f);
-	Material* plastic = new Material(Material::Type::PLASTIC, color{ 0.5f, 0.5f, 0.5f }, 1.8f, 100.f);
-	Material* glass = new Material(Material::Type::DIELECTRIC, color{ 0.f, 0.5f, 0.5f }, 1.f, 1.f);
+	Material* metallic = new Material("metallic", Material::Type::METALLIC, color{ 0.5f, 0.5f, 0.5f },  1.0f, 100.0f);
+	Material* plastic = new Material("plastic", Material::Type::PLASTIC, color{ 0.5f, 0.5f, 0.5f }, 1.8f, 100.f);
+	Material* glass = new Material("glass", Material::Type::DIELECTRIC, color{ 0.f, 0.5f, 0.5f }, 1.f, 1.f);
 
-	tracer() {
+	tracer(std::vector<Primitive*> primTab, std::vector<Light*> lightTab) {
 		//Objects
-		scene.push_back(new InfiniteCylinder( vec3{0.f, 0.f, 5.f}, 1.0f, matGrey));
+		for (int i = 0; i < primTab.size(); i++)
+			scene.push_back(primTab[i]);
 		//Lights
-		lights.push_back(new DirectionLight( vec3{ 0.f, 0.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 2.f ));
-		//lights.push_back(new PointLight(vec3{ 2.f, 0.f, 1.f }, color{ 0.f, 0.f, 1.f }, 10.0f));
+		for (int j = 0; j < lightTab.size(); j++)
+			lights.push_back(lightTab[j]);
 	}
 
 	~tracer()

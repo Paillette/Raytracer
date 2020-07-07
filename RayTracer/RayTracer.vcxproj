@@ -165,6 +165,7 @@
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Properties.cpp" />
     <ClCompile Include="RayTracer.cpp" />
+    <ClCompile Include="SceneReader.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Square.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Properties.h" />
     <ClInclude Include="RandomNumbers.h" />
     <ClInclude Include="ray.h" />
+    <ClInclude Include="SceneReader.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Square.h" />
     <ClInclude Include="Texture.h" />
@@ -199,6 +201,9 @@
     <ClInclude Include="Tri.h" />
     <ClInclude Include="vec2.h" />
     <ClInclude Include="vec3.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Scene\scene1.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
