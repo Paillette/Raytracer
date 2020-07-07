@@ -6,14 +6,30 @@
 #include "Plane.h"
 #include "Sphere.h"
 #include "Tri.h"
+#include "Light.h"
+#include "DirectionalLight.h"
+#include "PointLight.h"
 
 using namespace std;
+
+int returnMatIndex(std::vector<Material*> matList, std::vector<string> temp, int j)
+{
+	int index = 0;
+	//getMaterial
+	for (int i = 0; i < matList.size(); i++)
+	{
+		if (temp[j] == matList[i]->getName())
+		{
+			index = i;
+			break;
+		}
+	}
+	return index;
+}
 
 void SceneReader::readFile(string filename)
 {
 	ifstream file;
-	//TODO : passer en paramètre ? 
-	//file.open(filename);
 	file.open(filename);
 	if (!file) {
 		cout << " !!!! " << endl;
@@ -23,27 +39,6 @@ void SceneReader::readFile(string filename)
 
 	string line;
 	string word;
-	//std::vector<std::string> temp;
-	/*
-	int i = 0;
-	while (file >> word)
-	{
-		temp.push_back(word);
-		cout << temp[i] << endl;
-		i++;
-	}
-
-	for (int j = 0; j < temp.size(); j++)
-	{
-		if (temp[j] == "m")
-		{
-			string name = temp[j + 1];
-			Material* name = new Material(Material::Type::MATTE, color{ temp[j + 2] }, true, 0.f, 0.f);
-			matList.push_back(name);
-		}
-			cout << "material";
-	}
-	*/
 	std::vector<std::string> temp;
 	int pos = 0;
 
@@ -52,14 +47,19 @@ void SceneReader::readFile(string filename)
 		while ((pos = line.find(' ')) != std::string::npos) 
 		{
 			word = line.substr(0, pos);
-			std::cout << word << std::endl;
 			temp.push_back(word);
 			line.erase(0, pos + 1);
 		}
 		//materials
 		if (temp[0] == "m")
 		{
-			Material* mat = new Material(temp[1], Material::Type::MATTE, color{ std::stof(temp[3]),std::stof(temp[4]), std::stof(temp[5]) }, std::stoi(temp[6]), std::stof(temp[7]), std::stof(temp[8]));
+			Material* mat;
+
+			if(temp[2] == "MATTE")
+				mat = new Material(temp[1], Material::Type::MATTE, color{ std::stof(temp[3]),std::stof(temp[4]), std::stof(temp[5]) }, std::stoi(temp[6]), std::stof(temp[7]), std::stof(temp[8]));
+			else if(temp[2] == "METALLIC")
+				mat = new Material(temp[1], Material::Type::METALLIC, color{ std::stof(temp[3]),std::stof(temp[4]), std::stof(temp[5]) }, std::stoi(temp[6]), std::stof(temp[7]), std::stof(temp[8]));
+
 			matList.push_back(mat);
 			temp.clear();
 		}
@@ -68,18 +68,39 @@ void SceneReader::readFile(string filename)
 		else if (temp[0] == "p")
 		{
 			Primitive* prim;
+			int index = 0;
+
 			if (temp[1] == "Plane")
 			{
-				//std::stof(temp[4]) 
-				//prim = new Plane(vec3{ std::stof(temp[2]),std::stof(temp[3]), std::stof(temp[4]) }, vec3{ 0.f, 1.f, 0.f }, matGrey);
+				index = returnMatIndex(matList, temp, 8);
+				prim = new Plane(vec3{ std::stof(temp[2]),std::stof(temp[3]), std::stof(temp[4]) }, vec3{ std::stof(temp[5]),std::stof(temp[6]), std::stof(temp[7]) }, matList[index]);
 			}
-
-			//primivitesList.push_back(prim);
+			else if (temp[1] == "Sphere")
+			{
+				index = returnMatIndex(matList, temp, 6);
+				prim = new Sphere(vec3{ std::stof(temp[2]),std::stof(temp[3]), std::stof(temp[4]) }, std::stof(temp[5]), matList[index]);
+			}
+			primivitesList.push_back(prim);
+			temp.clear();
 		}
-		//lights
-		else if (line[0] == 'l')
-			cout << line[0] << endl;
 
+		//lights
+		else if (temp[0] == "l")
+		{
+			Light* light;
+
+			if (temp[1] == "DirectionLight")
+			{
+				light = new DirectionLight(vec3{ std::stof(temp[2]),std::stof(temp[3]), std::stof(temp[4]) }.normalize(), color{ std::stof(temp[5]), std::stof(temp[6]), std::stof(temp[7]) }, std::stof(temp[8]));
+			}
+			if (temp[1] == "PointLight")
+			{
+				light = new PointLight(vec3{ std::stof(temp[2]),std::stof(temp[3]), std::stof(temp[4]) }.normalize(), color{ std::stof(temp[5]), std::stof(temp[6]), std::stof(temp[7]) }, std::stof(temp[8]));
+			}
+				
+			lightsList.push_back(light);
+			temp.clear();
+		}
 	}
 
 	file.close();

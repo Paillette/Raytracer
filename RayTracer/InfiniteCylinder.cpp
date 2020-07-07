@@ -2,7 +2,7 @@
 #define M_PI 3.14159265358979323846
 
 InfiniteCylinder::InfiniteCylinder()
-    :radius(1.0f), Primitive(vec3{ 0, 0, 0 }, new Material(Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
+    :radius(1.0f), Primitive(vec3{ 0, 0, 0 }, new Material("mat", Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
 {
 }
 

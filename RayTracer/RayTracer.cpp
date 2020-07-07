@@ -15,9 +15,10 @@ using namespace std;
 int main(int argc, const char* argv[])
 {
 	//Instance du singleton des propriétés
-	Properties *prop;
+	Properties* prop;
 	prop = Properties::get();
 
+	int scene = 1;
 	string name = prop->getName();
 	int height = prop->getHeight();
 	int width = prop->getWidth();
@@ -33,6 +34,10 @@ int main(int argc, const char* argv[])
 	while (prop->getReady() == false)
 	{
 		cout << u8"-----------Welcome to raytracing !-------------" << "\n" << "\n";
+
+		cout << u8"Choose scene to render. Enter a number between 1 and 3" << "\n";
+		cin >> scene;
+		cout << "\n";
 
 		cout << u8"Choose image name" << "\n";
 		cin >> name;
@@ -53,7 +58,7 @@ int main(int argc, const char* argv[])
 		cout << u8"Want more options ?" << "\n" << u8"Yes : 1" << u8"       No : 0     " << "\n";
 		cin >> moreOption;
 		cout << "\n";
-		
+
 		if (moreOption == true)
 		{
 			cout << u8"Render with AO ?" << "\n" << u8"Yes : 1" << u8"      No : 0     " << "\n";
@@ -86,13 +91,13 @@ int main(int argc, const char* argv[])
 
 	//TODO : TEST
 	SceneReader sr;
-	sr.readFile("Scene\\scene1.txt");
+	sr.readFile("Scene\\scene" + std::to_string(scene) + ".txt");
 
 	//Image
 	Bitmap bmp;
 	bmp.SetHeader(width, height);
 	float aspectRatio = float(width) / float(height);
-	tracer tracer;
+	tracer tracer(sr.getPrimitivesList(), sr.getLightList());
 	BRDFs clp;
 	int nbreOfRaysByPixel;
 	int i, j = 0;

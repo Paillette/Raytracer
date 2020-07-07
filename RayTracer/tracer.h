@@ -42,11 +42,14 @@ struct tracer {
 	Material* plastic = new Material("plastic", Material::Type::PLASTIC, color{ 0.5f, 0.5f, 0.5f }, 1.8f, 100.f);
 	Material* glass = new Material("glass", Material::Type::DIELECTRIC, color{ 0.f, 0.5f, 0.5f }, 1.f, 1.f);
 
-	tracer() {
+	tracer(std::vector<Primitive*> primTab, std::vector<Light*> lightTab) {
 		//Objects
-		scene.push_back(new InfiniteCylinder( vec3{0.f, 0.f, 5.f}, 1.0f, matGrey));
+		for (int i = 0; i < primTab.size(); i++)
+			scene.push_back(primTab[i]);
 		//Lights
-		lights.push_back(new DirectionLight( vec3{ 0.f, 0.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 2.f ));
+		for (int j = 0; j < lightTab.size(); j++)
+			lights.push_back(lightTab[j]);
+		//lights.push_back(new DirectionLight( vec3{ 0.f, 0.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 2.f ));
 		//lights.push_back(new PointLight(vec3{ 2.f, 0.f, 1.f }, color{ 0.f, 0.f, 1.f }, 10.0f));
 	}
 
