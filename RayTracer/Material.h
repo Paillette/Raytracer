@@ -39,5 +39,6 @@ public:
 	}
 	float getIOR() const { return IOR; }
 	
+	void setStripeOrColor(bool i) { stripe = i; }
 	std::string setName(std::string n) { return name = n; }
 };

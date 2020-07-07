@@ -27,6 +27,8 @@ int main(int argc, const char* argv[])
 	bool AO = prop->getAO();
 	bool GI = prop->getGI();
 	float percent = 0.f;
+	bool changeMat = true;
+	SceneReader sr;
 	//SuperSampling
 	int numberOfSamples = Properties::get()->getSampleAA();
 
@@ -38,6 +40,7 @@ int main(int argc, const char* argv[])
 		cout << u8"Choose scene to render. Enter a number between 1 and 3" << "\n";
 		cin >> scene;
 		cout << "\n";
+		sr.readFile("Scene\\scene" + std::to_string(scene) + ".txt");
 
 		cout << u8"Choose image name" << "\n";
 		cin >> name;
@@ -54,6 +57,22 @@ int main(int argc, const char* argv[])
 		cout << u8"Render with shadow ?" << "\n" << u8"Yes : 1" << u8"      No : 0     " << "\n";
 		cin >> shadow;
 		cout << "\n";
+
+		cout << u8"Change material ?" << "\n" << u8"Yes : 1" << u8"      No : 0     " << "\n";
+		cin >> changeMat;
+		cout << "\n";
+
+		if (changeMat == true)
+		{
+			for (int i = 0; i < sr.getMaterial().size(); i++)
+			{
+				bool answer = 0;
+				cout << " --->" << sr.getMaterial()[i]->getName() << "\n" << u8"Yes : 1" << u8"      No : 0     " << "\n";
+				cin >> answer;
+				cout << "\n";
+				sr.getMaterial()[i]->setStripeOrColor(answer);
+			}
+		}
 
 		cout << u8"Want more options ?" << "\n" << u8"Yes : 1" << u8"       No : 0     " << "\n";
 		cin >> moreOption;
@@ -89,9 +108,6 @@ int main(int argc, const char* argv[])
 	prop->setGI(GI);
 	prop->setName(name);
 
-	//TODO : TEST
-	SceneReader sr;
-	sr.readFile("Scene\\scene" + std::to_string(scene) + ".txt");
 
 	//Image
 	Bitmap bmp;

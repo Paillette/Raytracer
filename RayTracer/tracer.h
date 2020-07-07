@@ -49,8 +49,6 @@ struct tracer {
 		//Lights
 		for (int j = 0; j < lightTab.size(); j++)
 			lights.push_back(lightTab[j]);
-		//lights.push_back(new DirectionLight( vec3{ 0.f, 0.f, 1.f }.normalize(), color{ 1.f, 1.f, 1.f}, 2.f ));
-		//lights.push_back(new PointLight(vec3{ 2.f, 0.f, 1.f }, color{ 0.f, 0.f, 1.f }, 10.0f));
 	}
 
 	~tracer()

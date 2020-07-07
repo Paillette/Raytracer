@@ -40,7 +40,7 @@ vec3 Square::calculateUVs(vec3& p) const
 {
 	float u = (p.x - floor(p.x));
 	float v = (p.y - floor(p.y));
-	float w = size * 10.f;
+	float w = size / 10.f;
 
 	return vec3{ u, v, w };
 }

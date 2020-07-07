@@ -17,5 +17,6 @@ public:
 	void readFile(string filename);
 	std::vector<Primitive*> getPrimitivesList() { return primivitesList; }
 	std::vector<Light*> getLightList() { return lightsList; }
+	std::vector<Material*> getMaterial() { return matList; }
 };
 

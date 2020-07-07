@@ -9,6 +9,10 @@
 #include "Light.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
+#include "Cone.h"
+#include "Cube.h"
+#include "InfiniteCylinder.h"
+#include "Square.h"
 
 using namespace std;
 
@@ -41,6 +45,7 @@ void SceneReader::readFile(string filename)
 	string word;
 	std::vector<std::string> temp;
 	int pos = 0;
+	int k = 0;
 
 	while (getline(file, line))
 	{
@@ -55,13 +60,16 @@ void SceneReader::readFile(string filename)
 		{
 			Material* mat;
 
-			if(temp[2] == "MATTE")
+			if (temp[2] == "MATTE")
+			{
 				mat = new Material(temp[1], Material::Type::MATTE, color{ std::stof(temp[3]),std::stof(temp[4]), std::stof(temp[5]) }, std::stoi(temp[6]), std::stof(temp[7]), std::stof(temp[8]));
+			}
 			else if(temp[2] == "METALLIC")
 				mat = new Material(temp[1], Material::Type::METALLIC, color{ std::stof(temp[3]),std::stof(temp[4]), std::stof(temp[5]) }, std::stoi(temp[6]), std::stof(temp[7]), std::stof(temp[8]));
 
 			matList.push_back(mat);
 			temp.clear();
+			k++;
 		}
 		
 		//primitives
@@ -80,6 +88,32 @@ void SceneReader::readFile(string filename)
 				index = returnMatIndex(matList, temp, 6);
 				prim = new Sphere(vec3{ std::stof(temp[2]),std::stof(temp[3]), std::stof(temp[4]) }, std::stof(temp[5]), matList[index]);
 			}
+			else if (temp[1] == "Tri")
+			{
+				index = returnMatIndex(matList, temp, 6);
+				prim = new Tri(std::stof(temp[2]), vec3{ std::stof(temp[3]),std::stof(temp[4]), std::stof(temp[5])}, matList[index]);
+			}
+			else if (temp[1] == "Cone")
+			{
+				index = returnMatIndex(matList, temp, 7);
+				prim = new Cone( vec3{ std::stof(temp[2]), std::stof(temp[3]), std::stof(temp[4]) }, std::stof(temp[5]), std::stof(temp[6]), matList[index]);
+			}
+			else if (temp[1] == "Cube")
+			{
+				index = returnMatIndex(matList, temp, 6);
+				prim = new Cube(vec3{ std::stof(temp[2]), std::stof(temp[3]), std::stof(temp[4]) }, std::stof(temp[5]), matList[index]);
+			}
+			else if (temp[1] == "Cylinder")
+			{
+				index = returnMatIndex(matList, temp, 6);
+				prim = new InfiniteCylinder(vec3{ std::stof(temp[2]), std::stof(temp[3]), std::stof(temp[4]) }, std::stof(temp[5]), matList[index]);
+			}
+			else if (temp[1] == "Square")
+			{
+				index = returnMatIndex(matList, temp, 9);
+				prim = new Square(vec3{ std::stof(temp[2]), std::stof(temp[3]), std::stof(temp[4]) }, vec3{ std::stof(temp[5]), std::stof(temp[6]), std::stof(temp[7]) }, std::stof(temp[8]), matList[index]);
+			}
+
 			primivitesList.push_back(prim);
 			temp.clear();
 		}
