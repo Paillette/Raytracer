@@ -1,5 +1,5 @@
-m matGrey, MATTE, 0.8f, 0.8f, 0.8f, 0.f, 0.f
+m matGrey MATTE 0.8f 0.8f 0.8f 0 0.f 0.f
+m matRose
+p Plane 0.f -1.5f 0.f 0.f -1.f 0.f matGrey
 
-p Plane, 0.f, -1.5f, 0.f, 0.f, -1.f, 0.f, matGrey
-
-l DirectionLight, 1.f, -1.f, 1.f, 1.f, 1.f, 1.f, 2.f
+l,DirectionLight,1.f,-1.f,1.f,1.f,1.f,1.f,2.f

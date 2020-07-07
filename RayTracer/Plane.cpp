@@ -1,7 +1,7 @@
 #include "Plane.h"
 
 Plane::Plane()
-:normal(vec3{ 0, 0, -1.f }), Primitive(vec3{ 0, 0, 0 }, new Material(Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
+:normal(vec3{ 0, 0, -1.f }), Primitive(vec3{ 0, 0, 0 }, new Material("mat", Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
 {
 }
 

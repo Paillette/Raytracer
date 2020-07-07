@@ -8,7 +8,7 @@ using namespace std;
 class SceneReader
 {
 private:
-	std::vector<Material> matList;
+	std::vector<Material*> matList;
 	std::vector<Primitive*> primivitesList;
 	std::vector<Light*> lightsList;
 

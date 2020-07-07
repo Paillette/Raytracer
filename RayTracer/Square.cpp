@@ -1,7 +1,7 @@
 #include "Square.h"
 
 Square::Square()
-    :size(1.0f), normal(vec3{ 0, 0, -1 }), Primitive(vec3{ 0, 0, 0 }, new Material(Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
+    :size(1.0f), normal(vec3{ 0, 0, -1 }), Primitive(vec3{ 0, 0, 0 }, new Material("mat", Material::Type::MATTE, vec3{ 1, 1, 1 }, 0.f, 0.f))
 {
 }
 

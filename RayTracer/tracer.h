@@ -29,16 +29,16 @@ struct tracer {
 	std::vector<Primitive*> scene;
 	std::vector<Light*> lights;
 
-	Material* matGrey = new Material(Material::Type::MATTE, color{ 0.8f, 0.8f, 0.8f }, true, 0.f, 0.f);
-	Material* matPink = new Material(Material::Type::MATTE, color{ 1.f, 0.3f, 0.5f }, 0.f, 0.f);
-	Material* matRed = new Material(Material::Type::MATTE, color{ 1.f, 0.13f, 0.2f }, 0.f, 0.f);
-	Material* matBlue = new Material(Material::Type::MATTE, color{ 0.13f, 0.18f, 0.8f }, 0.f, 0.f);
-	Material* matGreen= new Material(Material::Type::MATTE, color{ 0.8f, 1.f, 0.2f }, 0.f, 0.f);
-	Material* matOrange = new Material(Material::Type::MATTE, color{ 0.9f, 0.3f, 0.0f }, 0.f, 0.f);
+	Material* matGrey = new Material("matBlue", Material::Type::MATTE, color{ 0.8f, 0.8f, 0.8f }, true, 0.f, 0.f);
+	Material* matPink = new Material("matPink", Material::Type::MATTE, color{ 1.f, 0.3f, 0.5f }, 0.f, 0.f);
+	Material* matRed = new Material("matRed", Material::Type::MATTE, color{ 1.f, 0.13f, 0.2f }, 0.f, 0.f);
+	Material* matBlue = new Material("matBlue", Material::Type::MATTE, color{ 0.13f, 0.18f, 0.8f }, 0.f, 0.f);
+	Material* matGreen= new Material("matGreen", Material::Type::MATTE, color{ 0.8f, 1.f, 0.2f }, 0.f, 0.f);
+	Material* matOrange = new Material("matOrange", Material::Type::MATTE, color{ 0.9f, 0.3f, 0.0f }, 0.f, 0.f);
 
-	Material* metallic = new Material(Material::Type::METALLIC, color{ 0.5f, 0.5f, 0.5f },  1.0f, 100.0f);
-	Material* plastic = new Material(Material::Type::PLASTIC, color{ 0.5f, 0.5f, 0.5f }, 1.8f, 100.f);
-	Material* glass = new Material(Material::Type::DIELECTRIC, color{ 0.f, 0.5f, 0.5f }, 1.f, 1.f);
+	Material* metallic = new Material("metallic", Material::Type::METALLIC, color{ 0.5f, 0.5f, 0.5f },  1.0f, 100.0f);
+	Material* plastic = new Material("plastic", Material::Type::PLASTIC, color{ 0.5f, 0.5f, 0.5f }, 1.8f, 100.f);
+	Material* glass = new Material("glass", Material::Type::DIELECTRIC, color{ 0.f, 0.5f, 0.5f }, 1.f, 1.f);
 
 	tracer() {
 		//Objects
