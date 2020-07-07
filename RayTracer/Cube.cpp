@@ -89,19 +89,19 @@ vec3 Cube::calculateUVs(vec3& p) const
     {
         res.x = (res.z + 1) / 2;
         res.y = (res.y + 1) / 2;
-        res.z = 1.0f;
+        res.z = 10.0f;
     }
     else if (res.y > 0.9999 || res.y < -0.9999)
     {
         res.x = (res.x + 1) / 2;
         res.y = (res.z + 1) / 2;
-        res.z = 1.0f;
+        res.z = 10.0f;
     }
     else if (res.z > 0.9999 || res.z < -0.9999)
     {
         res.x = (res.x + 1) / 2;
         res.y = (res.y + 1) / 2;
-        res.z = 1.0f;
+        res.z = 10.0f;
     }
 
     return res;
