@@ -55,6 +55,6 @@ void Bitmap::save(const char* filename, FREE_IMAGE_FORMAT format, const int widt
 			FreeImage_SetPixelColor(bitmap, i, j, &color);
 		}
 	}
-
+	FreeImage_FlipVertical(bitmap);
 	FreeImage_Save(format, bitmap, filename);
 }

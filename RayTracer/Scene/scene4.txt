@@ -1,9 +1,15 @@
 m wall MATTE 1.f 1.f 1.f 0 0.f 0.f Wallpaper.jpg 
-m grass MATTE 1.f 1.f 1.f 0 0.f 0.f grass.jpg 
-m margot METALLIC 1.f 1.f 1.f 0 1.f 50.f Margot.jpg 
-m arthur METALLIC 1.f 1.f 1.f 0 1.f 50.f Arthur.jpg 
-p Square 0.f -1.5f 0.f 0.f 1.f 0.f 50.f grass 
+m carrrelage MATTE 1.f 1.f 1.f 0 0.f 0.f carrelage.jpg 
+m painting MATTE 1.f 1.f 1.f 0 1.f 50.f painting.jpg 
+m marble MATTE 1.f 1.f 1.f 0 1.f 50.f marble.jpg 
+m metallic METALLIC 0.5f 0.5f 0.5f 0 1.0f 100.0f N 
+p Square 0.f -1.5f 0.f 0.f 1.f 0.f 50.f carrrelage 
 p Square 0.f 0.f 5.f 0.f 0.f -1.f 50.f wall 
-p Cube 2.f 1.5f 5.74f 1.5f margot 
-p Cube -2.f 1.5f 5.74f 1.5f arthur 
-l PointLight 0.f 3.f 2.5.f 1.f 1.f 1.f 1.f 
+p Cube 0.f 1.5f 5.75f 1.f painting 
+p Cylinder -4.f, 0.f, 5.f 1.0f marble 
+p Cylinder 4.f, 0.f, 5.f 1.0f marble 
+p Cylinder -4.f, 0.f, 1.f 1.0f marble 
+p Cylinder 4.f, 0.f, 1.f 1.0f marble 
+p Cone 0.f -1.5f 5.f 0.5f 2.5f metallic 
+p Sphere 0.f 4.5f 4.f 1.5f metallic 
+l DirectionLight 0.f -1.f 1.f 1.f 1.f 1.f 1.f 

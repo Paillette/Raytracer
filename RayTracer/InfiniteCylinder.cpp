@@ -55,5 +55,8 @@ vec3 InfiniteCylinder::calculateUVs(vec3& p) const
 	else
 		S = radius * 30.f;
 
+	if(v < 0)
+		v = 1 + v;
+
 	return vec3{ u, v, 10.f };
 }
