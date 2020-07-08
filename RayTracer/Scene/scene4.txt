@@ -3,7 +3,7 @@ m carrrelage MATTE 1.f 1.f 1.f 0 0.f 0.f carrelage.jpg
 m painting MATTE 1.f 1.f 1.f 0 1.f 50.f painting.jpg 
 m marble MATTE 1.f 1.f 1.f 0 1.f 50.f marble.jpg 
 m metallic METALLIC 0.5f 0.5f 0.5f 0 1.0f 100.0f N 
-p Square 0.f -1.5f 0.f 0.f 1.f 0.f 50.f carrrelage 
+p Square 0.f -1.5f 2.f 0.f 1.f 0.f 50.f carrrelage 
 p Square 0.f 0.f 5.f 0.f 0.f -1.f 50.f wall 
 p Cube 0.f 1.5f 5.75f 1.f painting 
 p Cylinder -4.f, 0.f, 5.f 1.0f marble 

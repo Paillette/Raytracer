@@ -38,6 +38,8 @@ vec3 Square::calculateNormal(vec3& p) const
 
 vec3 Square::calculateUVs(vec3& p) const
 {
+	p = globalToLocal(p);
+
 	float u = (p.x - floor(p.x));
 	float v = (p.y - floor(p.y));
 	float w = size / 10.f;
