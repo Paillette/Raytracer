@@ -26,8 +26,7 @@ private:
 	Texture* tex;
 
 public:
-	Material(string n, Type t, vec3 col, bool StripeOrColor = false, float indice = 1.f, float rough = 10.f, Texture* te = nullptr)
-		: name(n), type(t), color(col), tex(te), stripe(StripeOrColor), IOR(indice), glossiness(rough) {}
+	Material(string n, Type t, vec3 col, bool StripeOrColor = false, float indice = 1.f, float rough = 10.f, const string s = nullptr);
 
 	string getName() const { return name; }
 	Type getType() const { return type; }

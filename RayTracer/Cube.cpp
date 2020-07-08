@@ -60,6 +60,7 @@ float Cube::intersect(const ray& ray) const
 vec3 Cube::calculateNormal(vec3& p) const
 {
     vec3 hit = globalToLocal(p);
+    hit = hit / size;
     vec3 obs = globalToLocal(vec3{ 0, 0, 0 });
     vec3 dir = hit - obs;
 
@@ -84,6 +85,7 @@ vec3 Cube::calculateNormal(vec3& p) const
 vec3 Cube::calculateUVs(vec3& p) const
 {
     vec3 res = globalToLocal(p);
+    res = res / size;
 
     if (res.x > 0.9999 || res.x < -0.9999)
     {

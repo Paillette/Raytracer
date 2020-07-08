@@ -1,8 +1,8 @@
-m matGrey MATTE 0.8f 0.8f 0.8f 1 0.f 0.f 
-m matPink MATTE 1.f 0.3f 0.5f 1 0.f 0.f 
-m matRed MATTE 1.f 0.13f 0.2f 1 0.f 0.f 
-m matBlue MATTE 0.13f 0.18f 0.8f 1 0.f 0.f 
-m metallic METALLIC 0.5f 0.5f 0.5f 0 1.0f 100.0f 
+m matGrey MATTE 0.8f 0.8f 0.8f 1 0.f 0.f N 
+m matPink MATTE 1.f 0.3f 0.5f 1 0.f 0.f N 
+m matRed MATTE 1.f 0.13f 0.2f 1 0.f 0.f N 
+m matBlue MATTE 0.13f 0.18f 0.8f 1 0.f 0.f N 
+m metallic METALLIC 0.5f 0.5f 0.5f 0 1.0f 100.0f N 
 p Plane 0.f -1.5f 0.f 0.f 1.f 0.f matGrey 
 p Tri 3.f 2.f 2.f 4.f matRed 
 p Sphere -4.f 3.f 8.f 1.f matGrey 

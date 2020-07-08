@@ -4,7 +4,10 @@
 //Create an image from a file
 Texture::Texture(const char* filename)
 {
-	loadFromFile((char*)filename);
+	if (filename != nullptr)
+		loadFromFile((char*)filename);
+	else
+		*this = nullptr;
 }
 
 //Load the image given by the filename

@@ -62,10 +62,10 @@ void SceneReader::readFile(string filename)
 
 			if (temp[2] == "MATTE")
 			{
-				mat = new Material(temp[1], Material::Type::MATTE, color{ std::stof(temp[3]),std::stof(temp[4]), std::stof(temp[5]) }, std::stoi(temp[6]), std::stof(temp[7]), std::stof(temp[8]));
+				mat = new Material(temp[1], Material::Type::MATTE, color{ std::stof(temp[3]),std::stof(temp[4]), std::stof(temp[5]) }, std::stoi(temp[6]), std::stof(temp[7]), std::stof(temp[8]), temp[9]);
 			}
 			else if(temp[2] == "METALLIC")
-				mat = new Material(temp[1], Material::Type::METALLIC, color{ std::stof(temp[3]),std::stof(temp[4]), std::stof(temp[5]) }, std::stoi(temp[6]), std::stof(temp[7]), std::stof(temp[8]));
+				mat = new Material(temp[1], Material::Type::METALLIC, color{ std::stof(temp[3]),std::stof(temp[4]), std::stof(temp[5]) }, std::stoi(temp[6]), std::stof(temp[7]), std::stof(temp[8]), temp[9]);
 
 			matList.push_back(mat);
 			temp.clear();
