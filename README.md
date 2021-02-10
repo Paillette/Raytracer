@@ -16,7 +16,7 @@ C++ CPU Raytracer
    <img width="200" height="200" src="/RayTracer/Screenshots/renduPointLight.jpg">
 </p>
 
-* Phong shading and texturing
+* Phong shading, reflections and texturing
 
 <p align="middle">
   <img width="200" height="200" src="/RayTracer/Screenshots/renduSansFresnel.jpg">
@@ -24,4 +24,5 @@ C++ CPU Raytracer
 </p>
 
 * Antialiasing super-sampling and jittering 
-* Global illumination an ambient occlusion
+* Global illumination and ambient occlusion
+* Load a scene from a txt file with datas
