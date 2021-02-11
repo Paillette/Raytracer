@@ -2,9 +2,9 @@
 #include <vector>
 #include <functional>
 #include "Background.h"
-#include "ray.h"
-#include "Light.h"
-#include "Primitive.h"
+#include "Utilities/ray.h"
+#include "Lights\Light.h"
+#include "Primitives\Primitive.h"
 
 struct tracer {
 

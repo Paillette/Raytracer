@@ -72,6 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>\RayTracer\Material;\Primitives;\RayTracer\Lights;\RayTracer\Utilities;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -90,7 +91,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Libs\FreeImage\Dist\x32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Raytracer\Utilities;Raytracer\Lights;Raytracer\Material;Raytracer\Primitives;..\Libs\FreeImage\Dist\x32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,53 +155,52 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bitmap.cpp" />
-    <ClCompile Include="Cone.cpp" />
-    <ClCompile Include="Cube.cpp" />
-    <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="InfiniteCylinder.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="Matrix4.cpp" />
-    <ClCompile Include="Plane.cpp" />
-    <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="Lights\DirectionalLight.cpp" />
+    <ClCompile Include="Lights\PointLight.cpp" />
+    <ClCompile Include="Material\Material.cpp" />
+    <ClCompile Include="Material\Texture.cpp" />
+    <ClCompile Include="Primitives\Cone.cpp" />
+    <ClCompile Include="Primitives\Cube.cpp" />
+    <ClCompile Include="Primitives\InfiniteCylinder.cpp" />
+    <ClCompile Include="Primitives\Plane.cpp" />
+    <ClCompile Include="Primitives\Sphere.cpp" />
+    <ClCompile Include="Primitives\Square.cpp" />
+    <ClCompile Include="Primitives\Tri.cpp" />
     <ClCompile Include="Properties.cpp" />
     <ClCompile Include="RayTracer.cpp" />
     <ClCompile Include="SceneReader.cpp" />
-    <ClCompile Include="Sphere.cpp" />
-    <ClCompile Include="Square.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="tracer.cpp" />
-    <ClCompile Include="Tri.cpp" />
+    <ClCompile Include="Utilities\Matrix4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="rendu.tga" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
-    <ClInclude Include="Bitmap.h" />
-    <ClInclude Include="BRDFs.h" />
-    <ClInclude Include="Cone.h" />
-    <ClInclude Include="Cube.h" />
-    <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="InfiniteCylinder.h" />
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="Matrix4.h" />
-    <ClInclude Include="Plane.h" />
-    <ClInclude Include="PointLight.h" />
-    <ClInclude Include="Primitive.h" />
+    <ClInclude Include="Lights\DirectionalLight.h" />
+    <ClInclude Include="Lights\Light.h" />
+    <ClInclude Include="Lights\PointLight.h" />
+    <ClInclude Include="Material\Material.h" />
+    <ClInclude Include="Material\Texture.h" />
+    <ClInclude Include="Primitives\Cone.h" />
+    <ClInclude Include="Primitives\Cube.h" />
+    <ClInclude Include="Primitives\InfiniteCylinder.h" />
+    <ClInclude Include="Primitives\Plane.h" />
+    <ClInclude Include="Primitives\Primitive.h" />
+    <ClInclude Include="Primitives\Sphere.h" />
+    <ClInclude Include="Primitives\Square.h" />
+    <ClInclude Include="Primitives\Tri.h" />
     <ClInclude Include="Properties.h" />
-    <ClInclude Include="RandomNumbers.h" />
-    <ClInclude Include="ray.h" />
     <ClInclude Include="SceneReader.h" />
-    <ClInclude Include="Sphere.h" />
-    <ClInclude Include="Square.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="tracer.h" />
-    <ClInclude Include="Tri.h" />
-    <ClInclude Include="vec2.h" />
-    <ClInclude Include="vec3.h" />
+    <ClInclude Include="Utilities\BRDFs.h" />
+    <ClInclude Include="Utilities\Matrix4.h" />
+    <ClInclude Include="Utilities\RandomNumbers.h" />
+    <ClInclude Include="Utilities\ray.h" />
+    <ClInclude Include="Utilities\vec2.h" />
+    <ClInclude Include="Utilities\vec3.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Scene\scene1.txt" />

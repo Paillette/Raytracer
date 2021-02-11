@@ -3,16 +3,16 @@
 #include <sstream>
 #include <fstream>
 #include <string>
-#include "Plane.h"
-#include "Sphere.h"
-#include "Tri.h"
-#include "Light.h"
-#include "DirectionalLight.h"
-#include "PointLight.h"
-#include "Cone.h"
-#include "Cube.h"
-#include "InfiniteCylinder.h"
-#include "Square.h"
+#include "Lights\Light.h"
+#include "Lights\DirectionalLight.h"
+#include "Lights\PointLight.h"
+#include "Primitives\Plane.h"
+#include "Primitives\Sphere.h"
+#include "Primitives\Tri.h"
+#include "Primitives\Cone.h"
+#include "Primitives\Cube.h"
+#include "Primitives\InfiniteCylinder.h"
+#include "Primitives\Square.h"
 
 using namespace std;
 

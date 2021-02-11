@@ -3,10 +3,10 @@
 #include <algorithm>
 #include <random>
 #include <functional>
-#include "Plane.h"
-#include "BRDFs.h"
-#include "RandomNumbers.h"
-#include "vec2.h"
+#include "Primitives\Plane.h"
+#include "Utilities\BRDFs.h"
+#include "Utilities\RandomNumbers.h"
+#include "Utilities\vec2.h"
 #include "Properties.h"
 
 float tracer::random_float()
@@ -169,15 +169,15 @@ vec3 tracer::trace(const ray& rayon, int depth)
 	BRDFs brdf;
 	randomNumbers random;
 
-	//calcul de la couleur du background pour ce pixel
-	//on itere sur l'ensemble des primitives de la scene
+	//compture background color for this pixel
+	//loop on all primitives in scene
 	GetIntersection(intersection, rayon, col);
 
 	if (intersection.primitive != nullptr)
 	{
-		//1 calcul du point d'intersection 
+		//1 compute intersection point
 		vec3 position = rayon.evaluate(intersection.distance);
-		//2 calcul d'une normale (d'une sphere ici)
+		//2 compute normal from hit primitive)
 		vec3 normal = intersection.primitive->calculateNormal(position);
 
 		//3 shadow feeler
@@ -205,7 +205,7 @@ vec3 tracer::trace(const ray& rayon, int depth)
 			shadow = 0.f;
 
 
-		//4 initialisation du nouveau rayon 
+		//4 init new ray
 		ray newRay;
 		vec3 reflect = brdf.reflect(rayon.direction, normal);
 		const Material* mat = intersection.primitive->getMaterial();
@@ -257,7 +257,6 @@ vec3 tracer::trace(const ray& rayon, int depth)
 				break;
 
 			default:
-				//appel recursif de trace()
 				col = col * trace(newRay, depth + 1);
 		}
 

@@ -2,7 +2,7 @@
 
 #include <fstream>
 #include <FreeImage.h>
-#include "vec3.h"
+#include "Utilities/vec3.h"
 #include <vector>
 
 struct Bitmap

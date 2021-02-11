@@ -3,10 +3,10 @@
 #include <iostream>
 
 #include "Bitmap.h"
-#include "ray.h"
+#include "Utilities/ray.h"
 #include "tracer.h"
-#include "BRDFs.h"
-#include "RandomNumbers.h"
+#include "Utilities/BRDFs.h"
+#include "Utilities/RandomNumbers.h"
 #include "Properties.h"
 #include "SceneReader.h"
 
@@ -14,7 +14,7 @@ using namespace std;
 
 int main(int argc, const char* argv[])
 {
-	//Instance du singleton des propriétés
+	//Instance singleton properties
 	Properties* prop;
 	prop = Properties::get();
 
@@ -34,7 +34,7 @@ int main(int argc, const char* argv[])
 	//SuperSampling
 	int numberOfSamples = Properties::get()->getSampleAA();
 
-	//Demande à l'utilisateur
+	//Ask the user
 	while (prop->getReady() == false)
 	{
 		cout << u8"-----------Welcome to raytracing !-------------" << "\n" << "\n";
@@ -109,7 +109,7 @@ int main(int argc, const char* argv[])
 	}
 	cout << "Image Processing : " << "\n";
 
-	//Set input utilisateur to singleton
+	//Set input from users to singleton
 	prop->setShadow(shadow);
 	prop->setHeight(height);
 	prop->setWidth(width);
@@ -138,17 +138,13 @@ int main(int argc, const char* argv[])
 	for (j = 0; j < height; j++)
 	{			
 		pixels.resize(width);
-		//convertion des coordonnées des pixels height en World 
-		//float y = -2.f * (float(j - height / 2) + 0.5f) / height;
 
 		for (i = 0; i < width; i++)
 		{
-			//convertion des coordonnées des pixels width en World 
-			//float x = aspectRatio * 2.f * (float(i - width / 2) + 0.5f) / width;
 
 			// Init the pixel to 100% black (no light).
 			vec3 col = vec3{ 0.f, 0.f, 0.f };
-			//Generation du rayon primaire
+			//Primary ray generation
 			ray ray;
 			ray.origin = { 0.f, 0.f, 0.f };
 
@@ -172,8 +168,7 @@ int main(int argc, const char* argv[])
 			col.g = clp.clamp(col.g, 0.f, 1.f);
 			col.b = clp.clamp(col.b, 0.f, 1.f);
 
-			//compression gamma des couleurs linéaires
-			//pour le stockage en 8bits RGB
+			//Gamma compression
 			float r = int(powf(col.r, 1.f / 2.2f) * 255.99f);
 			float g = int(powf(col.g, 1.f / 2.2f) * 255.99f);
 			float b = int(powf(col.b, 1.f / 2.2f) * 255.99f);

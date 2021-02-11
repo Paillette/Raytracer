@@ -1,6 +1,6 @@
 #pragma once
-#include "vec3.h"
-#include "Matrix4.h"
+#include "Utilities/Matrix4.h"
+#include "Utilities/vec3.h"
 
 class Entity {
 protected:

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vec3.h"
+#include "Utilities/vec3.h"
 
 struct Background
 {
@@ -9,10 +9,10 @@ struct Background
 
 	color Get(const vec3& dir)
 	{
-		// conversion [-1;+1] vers [0;1]
-		// equivalent de (y + 1) / 2
+		// convert [-1;+1] to [0;1]
+		// == (y + 1) / 2
 		float t = dir.y * 0.5f + 0.5f;
-		//interpolation lineaire (lerp) entre le ciel et la terre
+		// (lerp) between sky and earth
 		//A * t + B * (1-t)
 		// A + t * (B-A)
 		return sky*t + ground*(1.f - t);

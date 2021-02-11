@@ -1,7 +1,8 @@
 #pragma once
 #include <fstream>
-#include "Primitive.h"
-#include "Light.h"
+#include "Primitives/Primitive.h"
+#include "Lights/Light.h"
+#include "Material/Material.h"
 #include <vector>
 using namespace std;
 
